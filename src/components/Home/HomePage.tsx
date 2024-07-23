@@ -1,8 +1,11 @@
 
 
+
 const HomePage = () => {
   return (
-    <div className="bg-slate-200 h-dvh">HomePage</div>
+    <div className="bg-slate-200 h-dvh">
+     
+    </div>
   )
 }
 
