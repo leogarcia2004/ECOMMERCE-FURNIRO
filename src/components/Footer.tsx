@@ -47,7 +47,7 @@ const Footer = () => {
       <div>
       <h4 className="text-gray-400 font-medium mb-12">Help</h4>
 
-      <ul className="flex flex-col gap-10">
+      <ul className="flex flex-col gap-8">
         <li className="font-semibold">Payment Options</li>
         <li className="font-semibold">Returns</li>
         <li className="font-semibold">Privacy Policies</li>

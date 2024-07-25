@@ -14,7 +14,6 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [agree, setAgree] = useState(false)
   const [errors, setErrors] = useState<User | null>(null) 
 
@@ -22,7 +21,7 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
   const handleSubmit = (e: FormEvent) => {
 
     e.preventDefault() 
-    const data: User = { name, email, password, confirmPassword, agree } 
+    const data: User = { name, email, password, agree } 
 
     const validadeErros = validate(data) 
 
@@ -31,24 +30,17 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
       return
     }
 
-
     setErrors(null) 
     setName('') 
     setEmail('') 
-    setPassword('') 
-    setConfirmPassword('') 
+    setPassword('')  
     setAgree(false)
-
-    console.log(data)
   }
-
-
-  
   
   if(!isOpen) {
     return (
 
-      <div className='bg-white h-fit md:w-3/6 w-full sticky  py-16 m-auto z-10 flex flex-col justify-center items-center '>
+      <div className={isOpen ? ' fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center ' : 'fixed top-0 bg-white h-screen w-full  py-16 m-auto flex flex-col justify-center items-center '}>
 
         <i onClick={setFormOpen} className='fa-solid fa-circle-xmark cursor-pointer text-zinc-500 absolute right-4 top-3'></i>
 
@@ -79,13 +71,6 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
             )}
           </div>
 
-          <div className='flex flex-col mb-2 gap-1.5'>
-            <label htmlFor="confirmPassword">Confirme sua senha</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className=' focus:bg-amber-300 focus:outline-none py-1 pl-1.5 hover:bg-amber-200 bg-amber-300 rounded-sm border-none' />
-            {errors?.confirmPassword && (
-              <small className="text-xs text-red-500 mt-1">{errors?.confirmPassword}</small>
-            )}
-          </div>
 
           <div className='flex flex-col mb-6 '>
             <div className='flex items-center gap-2'>
