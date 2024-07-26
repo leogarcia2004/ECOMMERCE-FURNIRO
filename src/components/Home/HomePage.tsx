@@ -23,7 +23,7 @@ const HomePage = () => {
      const navigate = useNavigate()
 
      const handleNavigate = () => {
-          navigate('/products')
+          navigate('/shop')
      }
   return (
 
@@ -40,14 +40,18 @@ const HomePage = () => {
 
      <section className=" mt-10 flex flex-col  items-center">
           <h2 className="text-xl font-bold mb-1">Browse The Range</h2>
-          <p className="text-sm text-zinc-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p className="text-sm text-zinc-600 mb-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
           <CategoriasHome />
      </section>
 
      <section className=" mt-10 flex flex-col  items-center">
           <h2 className="text-xl font-bold mb-1">Our Products</h2>
-          <Products products={products.slice(0,8)} />
-          <button onClick={handleNavigate} className="border-amber-300 px-12 py-2 text-amber-300 border rounded-sm hover:bg-amber-300 hover:text-white font-semibold">Show More</button>
+
+          <div className="flex md:flex-wrap gap-6 flex-col max-w-screen-xl md:h-[800px]">
+               <Products products={products.slice(0,8)} />
+          </div>
+          
+          <button onClick={handleNavigate} className="border-amber-300 px-12 py-2 text-amber-300 border rounded-sm hover:bg-amber-300 hover:text-white font-semibold md:mt-2 mt-6">Show More</button>
      </section>
 
      <section className="bg-pink_fundo mt-10 flex gap-8 items-center pl-16 py-8 ">

@@ -87,7 +87,9 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
       </div>
       
     )
-  }  
+  } 
+  
+  return null
 }
 
 export default LoginForm

@@ -23,6 +23,10 @@ export const validate = (data: User) => {
         errors["password"] = "A senha é obrigatória";
     }
 
+    if(data.password.length < 6) {
+        errors["password"] = "A senha deve ter no mínimo 6 caracteres";
+    }
+
     if(!data.agree) { 
         errors["agree"] = "Você precisa concordar com os termos";
     }
