@@ -1,7 +1,7 @@
 import Products from "../Home/Products"
 import ImagemApresentacaoPage from "../ImagemApresentacaoPage"
 import { useEffect, useState } from "react"
-import Informacoes from "./Informacoes"
+import Informacoes from "../Informacoes"
 import filter from "../../assets/shop/filtering.png"
 import vector from "../../assets/shop/vectorr.png"
 import vector_1 from "../../assets/shop/vectorr_1.png"
@@ -62,7 +62,7 @@ const Shop = () => {
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
-      <div className='bg-pink_fundo flex justify-around items-center gap-10 w-full h-36'>
+      <section className='bg-pink_fundo flex justify-around items-center gap-10 w-full h-36'>
         <div className="flex">
           
             <ul className="flex items-center gap-6 pr-8">
@@ -94,13 +94,13 @@ const Shop = () => {
             <input className='appearance-none w-20 h-8 text-center text-zinc-400 focus:outline-none' type="text" />
           </div>
         </div>
-    </div>
+    </section>
 
-      <div className="flex justify-center">
-        <div className="flex items-center md:flex-wrap gap-6 flex-col md:w-4/6 md:max-h-[1600px]">
+      <section className="flex justify-center">
+        <div className="flex items-center md:flex-wrap gap-6 flex-col md:w- md:max-h-[1600px]">
           <Products products={getVisibleProducts()}/>
         </div>
-      </div>
+      </section>
 
       <div className="flex gap-6 justify-center mt-8 mb-12">
        {

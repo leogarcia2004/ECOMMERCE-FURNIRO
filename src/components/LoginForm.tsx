@@ -14,14 +14,13 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [agree, setAgree] = useState(false)
   const [errors, setErrors] = useState<User | null>(null) 
 
 
   const handleSubmit = (e: FormEvent) => {
 
     e.preventDefault() 
-    const data: User = { name, email, password, agree } 
+    const data: User = { name, email, password } 
 
     const validadeErros = validate(data) 
 
@@ -34,7 +33,6 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
     setName('') 
     setEmail('') 
     setPassword('')  
-    setAgree(false)
   }
   
   if(!isOpen) {
@@ -63,7 +61,7 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
             )}
           </div>
 
-          <div className='flex flex-col mb-3 gap-1.5'>
+          <div className='flex flex-col mb-6 gap-1.5'>
             <label htmlFor="password">Senha</label>
             <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className=' focus:bg-amber-300 focus:outline-none py-1 pl-1.5 hover:bg-amber-200 bg-amber-300 rounded-sm border-none' />
             {errors?.password && (
@@ -71,16 +69,6 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
             )}
           </div>
 
-
-          <div className='flex flex-col mb-6 '>
-            <div className='flex items-center gap-2'>
-            <input type="checkbox" id="rememberMe" name="rememberMe" checked={agree} onChange={(e) => setAgree(e.target.checked)} className={ agree ? 'appearance-none h-5 w-5 rounded-full cursor-pointer bg-amber-300 fas fa-check fa-xs flex justify-center items-center checked:text-white checked:bg-amber-300 focus:outline-none ' : 'appearance-none h-5 w-5 rounded-full cursor-pointer bg-amber-300 flex justify-center items-center focus:outline-none' } />
-              <label htmlFor="rememberMe" className='text-sm'>Aceito os termos de uso</label>
-            </div>
-            {errors?.agree && (
-              <small className="text-xs text-red-500 mt-1">{errors?.agree}</small>
-            )}
-          </div>
             
           <button type="submit" className=' p-2 border-amber-300 text-amber-300 border rounded-sm hover:bg-amber-300 hover:text-white font-semibold'>Submit</button>
       </form>
