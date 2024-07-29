@@ -3,7 +3,7 @@ import AmostraFotos from "../../assets/home/Images.png"
 import CarrosselProducts from "./CarrosselProducts"
 import CategoriasHome from "./CategoriasHome"
 import Products from "./Products"
-import { useNavigate } from 'react-router-dom';
+import BotaoShowMore from "../BotaoShowMore"
 
 const HomePage = () => {
 
@@ -20,11 +20,6 @@ const HomePage = () => {
           productsFunc()
      }, [])
 
-     const navigate = useNavigate()
-
-     const handleNavigate = () => {
-          navigate('/shop')
-     }
   return (
 
     <>
@@ -51,7 +46,7 @@ const HomePage = () => {
                <Products products={products.slice(0,8)} />
           </div>
           
-          <button onClick={handleNavigate} className="border-amber-300 px-12 py-2 text-amber-300 border rounded-sm hover:bg-amber-300 hover:text-white font-semibold md:mt-2 mt-6">Show More</button>
+          <BotaoShowMore />
      </section>
 
      <section className="bg-pink_fundo mt-10 flex gap-8 items-center pl-16 py-8 ">

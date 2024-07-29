@@ -58,7 +58,6 @@ const Shop = () => {
     };  
 
 
-    
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
@@ -97,7 +96,7 @@ const Shop = () => {
     </section>
 
       <section className="flex justify-center">
-        <div className="flex items-center md:flex-wrap gap-6 flex-col md:w- md:max-h-[1600px]">
+        <div className="flex items-center md:flex-wrap gap-6 flex-col md:max-h-[1600px]">
           <Products products={getVisibleProducts()}/>
         </div>
       </section>
