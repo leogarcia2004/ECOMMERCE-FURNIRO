@@ -5,23 +5,9 @@ import selo_desconto from '../../assets/shop/selo_descount.png'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Carrinho from '../Carrinho'
-export interface IProduct {
-  id: number,
-  title: string,
-  description: string,
-  short: string,
-  normalPrice: number,
-  salePrice: number,
-  images: string,
-  new: boolean
-  sku: string
-}
+import { IProduct, productsProps } from '../PropsProduct'
 
-interface productsProps {
-  products: IProduct[]
-}
-
-const Products:React.FC<productsProps> = ({products}) => {
+const Products:React.FC<productsProps> = ({ products}) => {
 
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(true);
@@ -49,8 +35,8 @@ const Products:React.FC<productsProps> = ({products}) => {
         product.new ?
         <div onClick={navigateClick} className='card-father cursor-pointer'>
 
-              <div key={product.id} className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
-                <div className='w-full relative'>
+              <div className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
+                <div key={product.id}  className='w-full relative'>
                   <img className='absolute top-4 right-4 h-10' src={selo_new} alt="Selo new" />
                   <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} /> 
                 </div>
@@ -85,8 +71,8 @@ const Products:React.FC<productsProps> = ({products}) => {
         :
         <div onClick={navigateClick} className='card-father cursor-pointer'>
             
-            <div key={product.id} className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
-              <div className='w-full relative'>
+            <div className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
+              <div key={product.id} className='w-full relative'>
                 <img className='absolute top-4 right-4 h-10' src={selo_desconto} alt="Selo desconto" />
                 <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} />
               </div>
@@ -124,7 +110,7 @@ const Products:React.FC<productsProps> = ({products}) => {
         </div>
       ))}
 
-      <Carrinho  products={cartProducts} isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)} />
+      <Carrinho products={cartProducts} isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)} />
       </>
       
     

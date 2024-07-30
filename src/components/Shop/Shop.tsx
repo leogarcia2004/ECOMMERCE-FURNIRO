@@ -5,12 +5,15 @@ import Informacoes from "../Informacoes"
 import filter from "../../assets/shop/filtering.png"
 import vector from "../../assets/shop/vectorr.png"
 import vector_1 from "../../assets/shop/vectorr_1.png"
+
 const Shop = () => {
 
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<number>(16)
+  const [localQuery, setLocalQuery] = useState("");
   const PRODUCTS_PER_PAGE = search;
+
 
      useEffect(() => {
           const productsFunc = async () => {
@@ -57,7 +60,6 @@ const Shop = () => {
       return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
     };  
 
-
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
@@ -85,12 +87,12 @@ const Shop = () => {
         <div className='flex gap-6 md:flex-row flex-col font-medium'>
           <div className='flex gap-2'>
             Show
-            <input className='appearance-none w-8 h-8 text-center items-center pl-1 text-zinc-400 focus:outline-none' value={search} min={4} max={16} onChange={(e) => setSearch(e.target.value)} type="number" name="number" id="number" />
+            <input className='appearance-none w-9 h-8 text-center items-center pl-1 text-zinc-400 focus:outline-none' value={search} min={4} max={16} onChange={(e) => setSearch(e.target.value)} type="number" name="number" id="number" />
           </div>
 
           <div className='flex gap-2'>
             Short by
-            <input className='appearance-none w-20 h-8 text-center text-zinc-400 focus:outline-none' type="text" />
+            <input value={localQuery} onChange={(e) => setLocalQuery(e.target.value)} className='appearance-none w-20 h-8 text-center text-zinc-400 focus:outline-none' type="text" />
           </div>
         </div>
     </section>

@@ -4,12 +4,12 @@ import CarrosselProducts from "./CarrosselProducts"
 import CategoriasHome from "./CategoriasHome"
 import Products from "./Products"
 import BotaoShowMore from "../BotaoShowMore"
+import { useNavigate } from "react-router-dom"
 
 const HomePage = () => {
 
      const [products, setProducts] = useState([])
      
-
      useEffect(() => {
           const productsFunc = async () => {
 
@@ -21,7 +21,11 @@ const HomePage = () => {
           productsFunc()
      }, [])
 
-     
+     const navigate = useNavigate()
+
+     const navigateClick = () => {
+          navigate('/shop')
+     }
 
   return (
 
@@ -32,7 +36,7 @@ const HomePage = () => {
         <span className='font-semibold mb-6'>new arrival</span>
         <h1 className='text-4xl font-bold text-amber-600 mb-6'>Discover Our <br /> New Collection</h1>
         <p className='font-semibold mb-10'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem omnis iure corporis, ratione ipsum laborum.</p>
-        <button className='bg-amber-600 text-white px-14 py-4 font-semibold'>Buy now</button>
+        <button onClick={navigateClick} className='bg-amber-600 text-white px-14 py-4 font-semibold'>Buy now</button>
      </div>
      </section>
      
