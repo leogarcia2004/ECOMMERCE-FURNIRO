@@ -6,6 +6,7 @@ import Contact from '../src/components/Contact/Contact'
 import Footer from './components/Footer'
 import ProductSelected from './components/Product/ProductSelected'
 import Cart from './components/Cart/Cart'
+import Checkout from './components/Checkout/Checkout'
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
         <Route path="/shop" element={<Shop /> } />
         <Route path="/productselected" element={<ProductSelected />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Contact /> } />
+        <Route path="/checkout" element={<Checkout /> } />
         <Route path="/contact" element={<Contact /> } />
       </Routes>
       <Footer />
