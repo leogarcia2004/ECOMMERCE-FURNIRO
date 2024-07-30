@@ -110,9 +110,9 @@ const ProductSelected = () => {
 
     <section className='border-t mb-10 border-zinc-300'>
       <div className='flex justify-center my-10 gap-6'>
-        <h1 className='md:text-xl text-lg font-medium'>Description</h1>
-        <h1 className='md:text-xl text-lg text-zinc-400'>Additional Information</h1>
-        <h1 className='md:text-xl text-lg text-zinc-400'>Reviews [5]</h1>
+        <h1 className='md:text-xl text-lg font-medium cursor-pointer'>Description</h1>
+        <h1 className='md:text-xl text-lg text-zinc-400 cursor-pointer'>Additional Information</h1>
+        <h1 className='md:text-xl text-lg text-zinc-400 cursor-pointer'>Reviews [5]</h1>
       </div>
 
       <div className='text-zinc-400 text-justify flex flex-col gap-8 items-center w-full'>
@@ -121,7 +121,7 @@ const ProductSelected = () => {
         <p className='w-9/12'>Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</p>
       </div>
 
-      <div className='flex justify-center mt-8 gap-10'>
+      <div className='flex md:flex-row flex-col items-center justify-center mt-8 gap-10'>
         <img className='bg-pink_fundo h-60 w-96' src="" alt="" /> 
         <img className='bg-pink_fundo h-60 w-96' src="" alt="" />
       </div>

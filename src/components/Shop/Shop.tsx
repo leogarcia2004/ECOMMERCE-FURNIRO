@@ -9,7 +9,7 @@ const Shop = () => {
 
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [search, setSearch] = useState<number>(0)
+  const [search, setSearch] = useState<number>(16)
   const PRODUCTS_PER_PAGE = search;
 
      useEffect(() => {
@@ -61,7 +61,7 @@ const Shop = () => {
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
-      <section className='bg-pink_fundo flex justify-around items-center gap-10 w-full h-36'>
+      <section className='bg-orange-100 md:px-0 px-6 flex justify-around items-center mb-10 gap-10 w-full h-36'>
         <div className="flex">
           
             <ul className="flex items-center gap-6 pr-8">
@@ -79,10 +79,10 @@ const Shop = () => {
               </li>
             </ul>
 
-          <span className=' pl-8 pt-2 pb-2 border-l flex items-center border-black text-sm font-medium'>Showing 1–16 of 32 results</span>
+          <span className=' pl-8 pt-2 pb-2 border-l flex items-center border-black text-sm font-medium'>Showing 1–16 of 60 results</span>
         </div>
 
-        <div className='flex gap-6 font-medium'>
+        <div className='flex gap-6 md:flex-row flex-col font-medium'>
           <div className='flex gap-2'>
             Show
             <input className='appearance-none w-8 h-8 text-center items-center pl-1 text-zinc-400 focus:outline-none' value={search} min={4} max={16} onChange={(e) => setSearch(e.target.value)} type="number" name="number" id="number" />

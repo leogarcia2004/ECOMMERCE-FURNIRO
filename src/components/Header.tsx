@@ -3,19 +3,37 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/logo_header.png'
 import LoginForm from './LoginForm'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Carrinho from './Carrinho'
+
 
 const Header = () => {
 
+    // const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [isOpen, setIsOpen] = useState<boolean>(true)
 
     const loginOpen = () => {
         setIsOpen(!isOpen)
       }
 
-  return (
-    <header className='bg-white flex justify-between font-semibold items-center  w-full h-20 top-0 sticky z-10'>
+    const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(true)
 
-        <img className='pl-10' src={logo} alt="Logo loja" />
+    const CarrinhoClick = () => {
+        setCarrinhoOpen(!carrinhoOpen)
+    }
+
+
+    const navigate = useNavigate()
+
+    const navigateClick = () => {
+
+        navigate('/')
+    }
+
+  return (
+    <header className='bg-white flex flex-col gap-4 items-center justify-center md:justify-between font-semibold md:items-center md:flex-row py-6 w-full md:h-20 h-fit top-0 sticky z-10'>
+
+        <img className='pl-10 cursor-pointer' onClick={navigateClick} src={logo} alt="Logo loja" />
 
         <nav>
             <ul className='flex gap-16 justify-center font-600'>
@@ -37,16 +55,17 @@ const Header = () => {
             </ul>
         </nav>
 
-            <div className='flex pr-20 gap-8'>
+            <div className='flex justify-center md:pr-20 gap-8'>
                 <button>
                     <i onClick={loginOpen} className="fas fa-user-injured fa-lg cursor-pointer"></i>
                 </button>
                 <button>
-                    <i className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
+                    <i onClick={CarrinhoClick} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
                 </button>
             </div>
             
         <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} />
+        {/* <Carrinho products={[]}  isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)}/> */}
     </header>
   )
 }

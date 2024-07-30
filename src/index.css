@@ -3,3 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card-father:hover  .card-add{
+    @apply flex
+}
+
+.card-father .card-add{
+    @apply hidden
+}
+
+.card-father:hover .card-product{
+    @apply hidden
+}
+
+.card-father .card-product{
+    @apply flex
+}
