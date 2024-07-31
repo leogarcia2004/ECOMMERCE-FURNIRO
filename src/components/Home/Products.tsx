@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import Carrinho from '../Carrinho'
 import { IProduct, productsProps } from '../PropsProduct'
 
-const Products:React.FC<productsProps> = ({ products}) => {
+const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
 
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(true);
@@ -35,8 +35,8 @@ const Products:React.FC<productsProps> = ({ products}) => {
         product.new ?
         <div onClick={navigateClick} className='card-father cursor-pointer'>
 
-              <div className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
-                <div key={product.id}  className='w-full relative'>
+              <div key={product.id}  className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
+                <div className='w-full relative'>
                   <img className='absolute top-4 right-4 h-10' src={selo_new} alt="Selo new" />
                   <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} /> 
                 </div>
@@ -71,8 +71,8 @@ const Products:React.FC<productsProps> = ({ products}) => {
         :
         <div onClick={navigateClick} className='card-father cursor-pointer'>
             
-            <div className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
-              <div key={product.id} className='w-full relative'>
+            <div key={product.id} className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
+              <div className='w-full relative'>
                 <img className='absolute top-4 right-4 h-10' src={selo_desconto} alt="Selo desconto" />
                 <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} />
               </div>
@@ -85,7 +85,6 @@ const Products:React.FC<productsProps> = ({ products}) => {
                 </div>
               </div>
 
-              
             </div>
 
             <div className=' bg-black bg-opacity-70 flex flex-col gap-3 justify-center items-center w-52 h-90 card-add'>

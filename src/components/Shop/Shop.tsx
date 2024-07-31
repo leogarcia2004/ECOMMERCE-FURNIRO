@@ -1,6 +1,6 @@
 import Products from "../Home/Products"
 import ImagemApresentacaoPage from "../ImagemApresentacaoPage"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Informacoes from "../Informacoes"
 import filter from "../../assets/shop/filtering.png"
 import vector from "../../assets/shop/vectorr.png"
@@ -11,22 +11,26 @@ const Shop = () => {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [search, setSearch] = useState<number>(16)
-  const [localQuery, setLocalQuery] = useState("");
+  const [localQuery, setLocalQuery] = useState('');
   const PRODUCTS_PER_PAGE = search;
 
 
      useEffect(() => {
           const productsFunc = async () => {
-
-               const response = await fetch('http://localhost:3000/products')
+            const response = await fetch('http://localhost:3000/products')
      
-               const data = await response.json()
-               setProducts(data)
+            const data = await response.json()
+            setProducts(data)
           }
           productsFunc()
      }, [])
 
-     const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+     const filterProducts = useMemo(() => {
+      return products.filter((product) => product.category.toLowerCase().includes(localQuery.toLowerCase()));
+    },[localQuery, products]);
+    console.log(filterProducts);
+
+     const totalPages = Math.ceil(filterProducts.length / PRODUCTS_PER_PAGE);
 
      const nextPage = () => {
        if (currentPage < totalPages) {
@@ -46,7 +50,7 @@ const Shop = () => {
    
      const getVisibleProducts = () => {
        const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-       return products.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+       return filterProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
      };
 
      const getPageButtons = () => {
@@ -59,7 +63,7 @@ const Shop = () => {
   
       return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
     };  
-
+    
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
@@ -99,7 +103,7 @@ const Shop = () => {
 
       <section className="flex justify-center">
         <div className="flex items-center md:flex-wrap gap-6 flex-col md:max-h-[1600px]">
-          <Products products={getVisibleProducts()}/>
+          <Products productsFilter={filterProducts}  products={getVisibleProducts()}/>
         </div>
       </section>
 

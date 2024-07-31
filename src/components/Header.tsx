@@ -5,23 +5,22 @@ import LoginForm from './LoginForm'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Carrinho from './Carrinho'
-import { IProduct,  productsProps } from './PropsProduct'
+import { IProduct } from './PropsProduct'
 
-const Header: React.FC<productsProps> = ({products}) => {
+const Header = () => {
 
-    const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
+    // const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [isOpen, setIsOpen] = useState<boolean>(true)
 
     const loginOpen = () => {
         setIsOpen(!isOpen)
       }
 
-    const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(true)
+    const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(false)
 
     const CarrinhoClick = () => {
         setCarrinhoOpen(!carrinhoOpen)
     }
-
 
     const navigate = useNavigate()
 
@@ -65,7 +64,7 @@ const Header: React.FC<productsProps> = ({products}) => {
             </div>
             
         <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} />
-        {/* <Carrinho products={cartProducts}  isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)}/> */}
+        {/* <Carrinho products={cartProducts} isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)}/> */}
     </header>
   )
 }

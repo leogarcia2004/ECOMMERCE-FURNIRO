@@ -30,7 +30,7 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
 
-  let valorTotal = products.reduce((acc, product) => {
+  let amount = products.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
     const price = product.new ? product.salePrice : product.normalPrice;
     return acc + (price * quantity);
@@ -74,7 +74,7 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
             
         </div>
     
-          <span className='w-full flex gap-36 pl-5 rounded-sm'>Subtotal <span className='text-yellow-600 font-medium'>{valorTotal.toFixed(2)}</span> </span>
+          <span className='w-full flex gap-36 pl-5 rounded-sm'>Subtotal <span className='text-yellow-600 font-medium'>{amount.toFixed(2)}</span> </span>
            
           <div className='flex text-sm gap-4'>
             <button className='w-fit py-1 px-7 border border-black rounded-2xl text-neutral-900'>Cart</button>

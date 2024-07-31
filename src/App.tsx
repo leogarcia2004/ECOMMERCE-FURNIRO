@@ -14,14 +14,14 @@ function App() {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    const productsFunc = async ({}) => {
+    const productsFunc = async () => {
 
          const response = await fetch('http://localhost:3000/products')
 
          const data = await response.json()
          setProducts(data)
     }
-    productsFunc({})
+    productsFunc()
 }, [])
 
   return (

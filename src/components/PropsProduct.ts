@@ -12,5 +12,6 @@ export interface IProduct {
 }
 
 export interface productsProps {
+    productsFilter: IProduct[]
     products: IProduct[]
 }
