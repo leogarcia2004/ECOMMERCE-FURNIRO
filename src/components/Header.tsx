@@ -2,14 +2,11 @@
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo_header.png'
 import LoginForm from './LoginForm'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Carrinho from './Carrinho'
-import { IProduct } from './PropsProduct'
 
 const Header = () => {
 
-    // const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
     const [isOpen, setIsOpen] = useState<boolean>(true)
 
     const loginOpen = () => {
@@ -64,7 +61,6 @@ const Header = () => {
             </div>
             
         <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} />
-        {/* <Carrinho products={cartProducts} isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)}/> */}
     </header>
   )
 }

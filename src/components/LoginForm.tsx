@@ -42,12 +42,12 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
 
         <i onClick={setFormOpen} className='fa-solid fa-circle-xmark cursor-pointer text-zinc-500 absolute right-4 top-3'></i>
 
-        <h1 className=' text-center mb-6 text-amber-400 font-bold text-3xl'>Cadastre-se!</h1>
-        <form onSubmit={handleSubmit} className='bg-white py-8 w-96 px-8 flex flex-col border-amber-300 border '>
+        <h1 className=' text-center mb-6 font-bold text-3xl'>Cadastre-se!</h1>
+        <form onSubmit={handleSubmit} className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
 
           <div className='flex flex-col mb-3 gap-1.5'>
             <label htmlFor="name">Nome</label>
-            <input type="name" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} className=' focus:bg-amber-300 focus:outline-none py-1 pl-1.5 hover:bg-amber-200 bg-amber-300 rounded-sm border-none' />
+            <input type="name" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} className='focus:outline-none py-1 pl-1.5  border border-zinc-500 rounded-sm' />
             {errors?.name && (
               <small className="text-xs text-red-500 mt-1">{errors?.name}</small>
             )}
@@ -55,7 +55,7 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
 
           <div className='flex flex-col mb-3 gap-1.5'>
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className=' focus:bg-amber-300 focus:outline-none py-1 pl-1.5 hover:bg-amber-200 bg-amber-300 rounded-sm border-none' />
+            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none py-1 pl-1.5 border border-zinc-500 rounded-sm' />
             {errors?.email && (
               <small className="text-xs text-red-500 mt-1">{errors?.email}</small>
             )}
@@ -63,14 +63,14 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
 
           <div className='flex flex-col mb-6 gap-1.5'>
             <label htmlFor="password">Senha</label>
-            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className=' focus:bg-amber-300 focus:outline-none py-1 pl-1.5 hover:bg-amber-200 bg-amber-300 rounded-sm border-none' />
+            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className='focus:outline-none py-1 pl-1.5  border border-zinc-500 rounded-sm' />
             {errors?.password && (
               <small className="text-xs text-red-500 mt-1">{errors?.password}</small>
             )}
           </div>
 
             
-          <button type="submit" className=' p-2 border-amber-300 text-amber-300 border rounded-sm hover:bg-amber-300 hover:text-white font-semibold'>Submit</button>
+          <button type="submit" className=' p-2 bg-yellow-500 hover:bg-yellow-600 text-white border rounded-sm font-semibold border-none'>Submit</button>
       </form>
       </div>
       

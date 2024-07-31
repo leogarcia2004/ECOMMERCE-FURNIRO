@@ -19,3 +19,7 @@
 .card-father .card-product{
     @apply flex
 }
+
+.flip-horizontal {
+    transform: scaleX(-1);
+}

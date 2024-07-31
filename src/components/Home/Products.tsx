@@ -3,11 +3,10 @@
 import selo_new from '../../assets/shop/selo_new.png'
 import selo_desconto from '../../assets/shop/selo_descount.png'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Carrinho from '../Carrinho'
 import { IProduct, productsProps } from '../PropsProduct'
 
-const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
+const Products:React.FC<productsProps> = ({products}) => {
 
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(true);
@@ -22,10 +21,10 @@ const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
     }
   }
 
-  const navigate = useNavigate()
-
-  const navigateClick = () => {
-        navigate('/productselected')
+    const doubleFunc = (e, id:number) => {
+      e.stopPropagation()
+      setCarrinhoOpen(!carrinhoOpen)
+      handleBuy(id)
     }
 
   return (
@@ -33,7 +32,7 @@ const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
         {products.map((product) => (
         
         product.new ?
-        <div onClick={navigateClick} className='card-father cursor-pointer'>
+        <div  className='card-father cursor-pointer'>
 
               <div key={product.id}  className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
                 <div className='w-full relative'>
@@ -49,7 +48,7 @@ const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
 
           <div className=' bg-black hover:z-10 bg-opacity-70  flex-col gap-3 justify-center items-center w-52 h-90 card-add'>
 
-              <button onClick={() => handleBuy(product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
+              <button  onClick={(e) => doubleFunc(e, product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
               <div className='flex justify-center gap-2 text-xs text-white font-semibold'>
                 <div className='flex gap-1'>
                   <i></i>
@@ -69,7 +68,7 @@ const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
                
         </div>
         :
-        <div onClick={navigateClick} className='card-father cursor-pointer'>
+        <div className='card-father cursor-pointer'>
             
             <div key={product.id} className='bg-slate-200 flex w-52 h-90 flex-col card-product'>
               <div className='w-full relative'>
@@ -91,16 +90,16 @@ const Products:React.FC<productsProps> = ({productsFilter ,products}) => {
 
                 <button onClick={() => handleBuy(product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
                   <div className='flex justify-center gap-2 text-xs text-white font-semibold'>
-                    <div className='flex gap-1'>
-                      <i></i>
+                    <div className='flex items-center gap-1'>
+                      <i className="fas fa-share-alt "></i>
                       Share
                     </div>
                     <div className='flex gap-1'>
                       <i></i>
                       Compare
                     </div>
-                    <div className='flex gap-1'>
-                      <i></i>
+                    <div className='flex items-center gap-1'>
+                      <i className="far fa-heart"></i>
                       Like
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+
 import { useEffect, useState } from 'react'
 import Products from '../Home/Products'
 import BotaoShowMore from '../BotaoShowMore'
@@ -16,6 +16,7 @@ const ProductSelected = () => {
 
          const data = await response.json()
          setProducts(data)
+        //  setProducts(data.find((product) => product.id === 1))
     }
     productsFunc()
 }, [])
@@ -57,7 +58,7 @@ const ProductSelected = () => {
                 5 costumer Review
           </div>
 
-          <p  className="text-gray-700 md:w-3/6 w-9/12">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>   
+          <p className="text-gray-700 md:w-3/6 w-9/12">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>   
 
           <div className="flex flex-col gap-4 mb-8 mt-4">
             <div className='flex flex-col gap-3'>
