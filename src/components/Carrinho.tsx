@@ -4,21 +4,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bag from '../assets/bag_shopping.png'
+import { IProduct, productsProps } from './PropsProduct'
 
-interface Product {
-  id: number,
-  title: string,
-  description: string,
-  short: string,
-  normalPrice: number,
-  salePrice: number,
-  images: string,
-  new: boolean
-  sku: string
-}
 
 interface CarrinhoProps {
-  products: Product[];
+  products: IProduct[];
   isOpen: boolean;
   setCarrinhoOpen?: () => void;
 
@@ -41,6 +31,7 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
   // //   }
   // //   setAmount(total);
   // // }
+  
   let amount = products.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
     const price = product.new ? product.salePrice : product.normalPrice;

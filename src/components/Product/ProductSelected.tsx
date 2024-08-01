@@ -60,7 +60,7 @@ const ProductSelected:React.FC<productsProps> = () => {
                         <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
                         <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
                         <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
-                        <i className="fas fa-star h-10 mr-5 text-yellow-300 "></i>
+                        <i className="fas fa-star h-10 mr-5 text-yellow-300"></i>
                         5 costumer Review
                   </div>
 

@@ -54,7 +54,7 @@ const Products:React.FC<productsProps> = ({products}) => {
 
           <div className=' bg-black hover:z-10 bg-opacity-70  flex-col gap-3 justify-center items-center w-52 h-90 card-add'>
 
-              <button  onClick={(e) => doubleFunc(e, product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
+              <button onClick={(e) => doubleFunc(e, product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
               <div className='flex justify-center gap-2 text-xs text-white font-semibold'>
                 <div className='flex gap-1'>
                   <i className="fas fa-share-alt "></i>
