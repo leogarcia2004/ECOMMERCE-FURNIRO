@@ -8,12 +8,12 @@ const Contact = () => {
     <div>
       <ImagemApresentacaoPage title="Contact" />
       <section className="flex flex-col my-16 items-center">
-        <h1 className="text-2xl font-semibold mb-3">Get In Touch With Us</h1>
-        <p className="text-sm text-center text-zinc-400">For More Information About Our Product & Services. Please Feel Free To Drop Us <br /> An Email. Our Staff Always Be There To Help You Out. Do Not Hesitate!</p>
+        <h1 className="text-2xl font-semibold md:mb-3 mb-6">Get In Touch With Us</h1>
+        <p className="text-sm text-center md:px-0 px-10 text-zinc-400">For More Information About Our Product & Services. Please Feel Free To Drop Us <br /> An Email. Our Staff Always Be There To Help You Out. Do Not Hesitate!</p>
 
-        <div className="flex gap-40 mt-20">
+        <div className="flex md:flex-row flex-col md:gap-40 gap-20 mt-20">
 
-        <div className="flex flex-col gap-10">
+        <div className="flex items-center md:justify-normal flex-col gap-10">
 
           <div className="flex gap-5">
             <i className="fas fa-map-marker-alt focus:outline-none"></i>

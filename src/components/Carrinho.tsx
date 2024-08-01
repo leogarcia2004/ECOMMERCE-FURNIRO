@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import bag from '../assets/bag_shopping.png'
 
 interface Product {
@@ -25,24 +26,41 @@ interface CarrinhoProps {
 
 const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }) => {
 
+  // const BACKGROUND_COLOR = 'rgb(0,0,0, 0.7)';
 
   const [clicked, setClicked] = useState(true);
+  // const [amount, setAmount] = useState(0);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
-
+  // const CalcAmount = () => {
+  // //   let total = 0;
+  // //   for (const product of products) {
+  // //     const quantity = quantities[product.id] || 1;
+  // //     const price = product.new ? product.salePrice : product.normalPrice;
+  // //     total += price * quantity;
+  // //   }
+  // //   setAmount(total);
+  // // }
   let amount = products.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
     const price = product.new ? product.salePrice : product.normalPrice;
     return acc + (price * quantity);
   }, 0);
 
-  
-
-
   const handleClick = () => {
       setClicked(!clicked)                          
  
-    }
+  }
+
+  const navigate = useNavigate();
+
+  const navigateCart = () => {
+    navigate('/cart')
+  }
+
+  const navigateCheckout = () => {
+    navigate('/checkout')
+  }
 
   return (
     <div  className={isOpen ? 'fixed top-0 right-0 z-50 items-center pt-8 bg-white duration-300 border-l border-text-slate-200 flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] w-72 ' : 'fixed top-0 right-[-500px] z-50 bg-white duration-300 border-l  flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] md-72' }>
@@ -77,8 +95,8 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
           <span className='w-full flex gap-36 pl-5 rounded-sm'>Subtotal <span className='text-yellow-600 font-medium'>{amount.toFixed(2)}</span> </span>
            
           <div className='flex text-sm gap-4'>
-            <button className='w-fit py-1 px-7 border border-black rounded-2xl text-neutral-900'>Cart</button>
-            <button className='w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900'>Checkout</button>
+            <button onClick={navigateCart} className='w-fit py-1 px-7 border border-black rounded-2xl text-neutral-900'>Cart</button>
+            <button onClick={navigateCheckout} className='w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900'>Checkout</button>
             <button className='w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900'>Comparison</button>
           </div>
         </div>

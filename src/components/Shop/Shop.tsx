@@ -64,7 +64,7 @@ const Shop = () => {
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
-      <section className='bg-orange-100 md:px-0 px-6 flex justify-around items-center mb-10 gap-10 w-full h-36'>
+      <section className='bg-orange-100 md:px-0 px-6 flex flex-wrap justify-around items-center mb-10 md:gap-32 w-full h-36'>
         <div className="flex">
           <ul className="flex items-center gap-6 pr-8">
             <li className="flex gap-3 items-center font-medium text-lg cursor-pointer">
@@ -78,9 +78,9 @@ const Shop = () => {
               <img className="cursor-pointer" src={vector_1} alt="logo vector_1" />
             </li>
           </ul>
-          <span className=' pl-8 pt-2 pb-2 border-l flex items-center border-black text-sm font-medium'>Showing 1–{search} of {products.length + 1} results</span>
+          <span className=' pl-8 pt-2 pb-2 border-l flex gap-0.5 items-center border-black text-sm font-medium'>Showing 1–{search} of {products.length+ 1} results</span>
         </div>
-        <div className='flex gap-6 md:flex-row flex-col font-medium'>
+        <div className='flex gap-6  font-medium'>
           <div className='flex gap-2'>
             Show
             <input

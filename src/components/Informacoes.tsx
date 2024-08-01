@@ -8,7 +8,7 @@ import support from '../assets/shop/customer-support.png'
 
 const Informacoes = () => {
   return (
-    <div className='bg-orange-100 flex md:flex-row px-10 md:px-0 flex-wrap flex-col justify-center items-center gap-10 w-full h-44'>
+    <div className='bg-orange-100 flex md:flex-row px-10  flex-wrap flex-col justify-center md:items-center gap-10 w-full h-44'>
         
             <div className='flex gap-3'>
                 <img className='md:h-12 h-8' src={trophy} alt="Logo troféu" />
