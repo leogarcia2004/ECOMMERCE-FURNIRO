@@ -1,31 +1,38 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import AmostraFotos from "../../assets/home/Images.png"
 import CarrosselProducts from "./CarrosselProducts"
-import CategoriasHome from "./CategoriasHome"
 import Products from "./Products"
 import BotaoShowMore from "../BotaoShowMore"
 import { useNavigate } from "react-router-dom"
+import dining from '../../assets/home/image_dining.png'
+import living from '../../assets/home/image_living.png'
+import bedroom from '../../assets/home/image_bedroom.png'
+import { useCarrinho } from "../../contexts/CarrinhoContext"
 
 const HomePage = () => {
 
-     const [products, setProducts] = useState([])
-     
-     useEffect(() => {
-          const productsFunc = async () => {
-
-               const response = await fetch('http://localhost:3000/products')
-     
-               const data = await response.json()
-               setProducts(data)
-          }
-          productsFunc()
-     }, [])
+     const [selectedTag, setSelectedTag] = useState('');
+     const {products} = useCarrinho()
+     const imagensCarousel = [
+          'https://static.mobly.com.br/p/Mobly-Guarda-Roupa-Casal-com-Espelho-ValC3AAncia-2-PT-6-GV-Branco-4758-1029401-1.jpg',
+          'https://static.mobly.com.br/p/Kappesberg-Conjunto-com-2-Cadeiras-Tiva-Linho-Cinza-e-Nogueira-9086-6509821-2.jpg',
+          'https://static.mobly.com.br/p/Estilare-Rack-Ciro-Branco-125-cm-4975-201767-5.jpg',
+          'https://static.mobly.com.br/p/Modern-Guarda-Roupa-Closet-Studio-Mel-e-Branco-187x80-cm-6973-3680711-1.jpg'
+     ] 
 
      const navigate = useNavigate()
 
      const navigateClick = () => {
           navigate('/shop')
      }
+
+     const handleCategory = (tag: string) => {
+          setSelectedTag(tag);
+     }
+
+     const filteredProducts = products.filter(product =>
+          selectedTag === '' || product.tags.includes(selectedTag)
+        );
 
   return (
 
@@ -43,14 +50,30 @@ const HomePage = () => {
      <section className=" mt-10 flex flex-col  items-center">
           <h2 className="text-xl font-bold mb-1">Browse The Range</h2>
           <p className="text-sm text-zinc-600 mb-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <CategoriasHome />
+          <div className='flex md:flex-row flex-col gap-4'>
+               <div onClick={() => handleCategory('Mesa')} className='flex flex-col items-center'>
+                    <img src={dining} className=' h-80 mb-5 cursor-pointer' alt="Imagem móveis" />
+                    <span className='text-neutral-800 font-bold'>Dining</span>
+               </div>
+
+               <div onClick={() => handleCategory('Sala')} className='flex flex-col items-center'>
+                    <img src={living} className=' h-80 mb-5 cursor-pointer' alt="Imagem móveis" />
+                    <span className='text-neutral-800 font-bold'>Living</span>
+               </div>
+
+               <div onClick={() => handleCategory('Quarto')} className='flex flex-col items-center'>
+                    <img src={bedroom} className=' h-80 mb-5 cursor-pointer' alt="Imagem móveis" />
+                    <span className='text-neutral-800 font-bold'>Bedroom</span>
+               </div>
+          </div>
      </section>
 
      <section className=" mt-10 flex flex-col  items-center">
           <h2 className="text-xl font-bold mb-1">Our Products</h2>
 
           <div className="flex md:flex-wrap pt-6 gap-6 flex-col max-w-screen-xl md:h-[820px]">
-               <Products products={products.slice(0,8)} />
+               <Products products={filteredProducts ? filteredProducts.slice(0,8) : products.slice(0,8) } />
+               
           </div>
           
           <BotaoShowMore />
@@ -60,9 +83,9 @@ const HomePage = () => {
           <div className="w-1/3">
             <h1 className="text-3xl font-bold mb-1">50+ Beautiful rooms <br /> inspiration</h1>
             <p className="text-sm text-zinc-600 mb-4 font-semibold">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
-            <button className=" px-8 py-2 text-white bg-amber-600 border text-sm rounded-sm hover:bg-amber-300 hover:text-white font-semibold">Explore More</button>
+            <button onClick={navigateClick} className=" px-8 py-2 text-white bg-amber-600 border text-sm rounded-sm hover:bg-amber-300 hover:text-white font-semibold">Explore More</button>
           </div>
-          <CarrosselProducts />
+          <CarrosselProducts images={imagensCarousel} />
      </section>
 
      <section className="mt-12 flex flex-col items-center">
@@ -76,3 +99,4 @@ const HomePage = () => {
 }
 
 export default HomePage
+

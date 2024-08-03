@@ -31,3 +31,8 @@ interface Iimages {
 export interface productsProps {
     products: IProduct[]
 }
+
+export interface relatedProps {
+    products: IProduct[];
+    category: string;
+}

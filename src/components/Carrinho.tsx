@@ -4,19 +4,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import bag from '../assets/bag_shopping.png'
-import { IProduct, productsProps } from './PropsProduct'
+import { useCarrinho } from '../contexts/CarrinhoContext'
 
+const Carrinho: React.FC = () => {
 
-interface CarrinhoProps {
-  products: IProduct[];
-  isOpen: boolean;
-  setCarrinhoOpen?: () => void;
-
-}
-
-const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }) => {
-
-  // const BACKGROUND_COLOR = 'rgb(0,0,0, 0.7)';
+  const {carrinhoOpen, setCarrinhoOpen, cartProducts} = useCarrinho();
 
   const [clicked, setClicked] = useState(true);
   // const [amount, setAmount] = useState(0);
@@ -32,7 +24,7 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
   // //   setAmount(total);
   // // }
   
-  let amount = products.reduce((acc, product) => {
+  let amount = cartProducts.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
     const price = product.new ? product.salePrice : product.normalPrice;
     return acc + (price * quantity);
@@ -40,7 +32,6 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
 
   const handleClick = () => {
       setClicked(!clicked)                          
- 
   }
 
   const navigate = useNavigate();
@@ -54,18 +45,18 @@ const Carrinho: React.FC<CarrinhoProps> = ({ products, isOpen, setCarrinhoOpen }
   }
 
   return (
-    <div  className={isOpen ? 'fixed top-0 right-0 z-50 items-center pt-8 bg-white duration-300 border-l border-text-slate-200 flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] w-72 ' : 'fixed top-0 right-[-500px] z-50 bg-white duration-300 border-l  flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] md-72' }>
+    <div  className={carrinhoOpen ? 'fixed top-0 right-0 z-50 items-center pt-8 bg-white duration-300 border-l border-text-slate-200 flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] w-72 ' : 'fixed top-0 right-[-500px] z-50 bg-white duration-300 border-l  flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] md-72' }>
         
           <div className='flex w-fit gap-16'>
             <div className='border-spacing-x-28 border-b border-zinc-300 pb-6 pr-20 '>
               <h3 className='text-2xl font-bold'>Shopping Cart</h3>
             </div>
-            <img src={bag} onClick={setCarrinhoOpen} alt="Logo bag" className='cursor-pointer h-5' />
+            <img src={bag} onClick={() => setCarrinhoOpen(!carrinhoOpen)} alt="Logo bag" className='cursor-pointer h-5' />
           </div>
     
           <div className='h-3/5 w-full overflow-y-auto flex flex-col gap-2'>
           { clicked ?
-          products.map(product => ( 
+          cartProducts.map(product => ( 
               <div key={product.id} className='flex items-center w-full justify-between p-1.5 px-6 rounded-lg'>
                 <img src={product.images.mainImage} alt="" className='h-20 bg-pink_fundo rounded-md' />
 

@@ -9,9 +9,9 @@ import vector_1 from "../../assets/shop/vectorr_1.png";
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [search, setSearch] = useState(16); // Número de produtos por página
+  const [search, setSearch] = useState(16); 
   const [localQuery, setLocalQuery] = useState('');
-  const PRODUCTS_PER_PAGE = search; // Define o número de produtos por página dinamicamente
+  const PRODUCTS_PER_PAGE = search; 
 
   useEffect(() => {
     const productsFunc = async () => {
@@ -100,6 +100,7 @@ const Shop = () => {
           <div className='flex gap-2'>
             Short by
             <input
+            placeholder="Default"
               value={localQuery}
               onChange={(e) => setLocalQuery(e.target.value)}
               className='appearance-none w-20 h-8 text-center text-zinc-400 focus:outline-none'

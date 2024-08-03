@@ -4,16 +4,16 @@ import logo from '../assets/logo_header.png'
 import LoginForm from './LoginForm'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useCarrinho } from '../contexts/CarrinhoContext'
 
 const Header = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(true)
+    const { carrinhoOpen, setCarrinhoOpen }  = useCarrinho();
 
     const loginOpen = () => {
         setIsOpen(!isOpen)
       }
-
-    const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(false)
 
     const CarrinhoClick = () => {
         setCarrinhoOpen(!carrinhoOpen)
@@ -56,7 +56,7 @@ const Header = () => {
                     <i onClick={loginOpen} className="fas fa-user-injured fa-lg cursor-pointer"></i>
                 </button>
                 <button>
-                    <i onClick={CarrinhoClick} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
+                    <i onClick={() => setCarrinhoOpen(true)} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
                 </button>
             </div>
             

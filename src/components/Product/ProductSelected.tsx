@@ -1,27 +1,40 @@
 
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BotaoShowMore from '../BotaoShowMore'
 import { useLocation } from 'react-router-dom'
-import { productsProps } from '../PropsProduct'
 import RelatedProducts from './RelatedProducts'
 
-const ProductSelected:React.FC<productsProps> = () => {
+const ProductSelected:React.FC  = () => {
 
   const location = useLocation();
   const product = location.state?.product;
-
   const [products, setProducts] = useState([])
   const [clickDescription, setClickDescription] = useState<boolean>(true)
+  const [seletedImage, setSeletedImage] = useState<string>(product.images.mainImage)
+  const [seletedColor, setSeletedColor] = useState(null)
+  const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
-    const productsFunc = async () => {
+    const productsFunc= async () => {
          const response = await fetch('http://localhost:3000/products')
          const data = await response.json()
          setProducts(data)
     }
     productsFunc()
   }, [])
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+
+  const handleColorClick = (color) => {
+    setSeletedColor(color);
+  }
+
+  const handleImageClick = (image) => {
+    setSeletedImage(image.target.src)
+  }
 
   return (
     <>
@@ -39,17 +52,17 @@ const ProductSelected:React.FC<productsProps> = () => {
                   <div className='flex  gap-10 w-5/12'>
                     <div className="flex flex-col gap-5 mt-4">
                       {
-                        product.images.gallery.map((image, index) => (
+                        product.images.gallery.map((image) => (
                           <ul>
-                            <li key={index}>
-                              <img src={image} alt="Miniatura móvel" className="w-24 h-24 bg-orange-100 object-cover cursor-pointer"/>
+                            <li key={image}>
+                              <img src={image} alt="Miniatura móvel" className={"w-24 h-24 bg-orange-100 object-cover cursor-pointer"} onClick={handleImageClick}/>
                             </li>
                           </ul>
                         ))
 
                       }
                     </div>
-                    <img src={product.images.mainImage} alt="Sofá Asgaard" className="w-96 h-[500px] "/>
+                    <img src={seletedImage} alt="Sofá Asgaard" className="w-96 h-[500px] "/>
                   </div>
 
                   <div className='flex flex-col w-full md:w-1/2 pl-12'>
@@ -61,7 +74,7 @@ const ProductSelected:React.FC<productsProps> = () => {
                         <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
                         <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
                         <i className="fas fa-star h-10 mr-5 text-yellow-300"></i>
-                        5 costumer Review
+                        {product.rating} Costumer Review
                   </div>
 
                   <p className="text-gray-700 w-full pr-4">
@@ -69,11 +82,40 @@ const ProductSelected:React.FC<productsProps> = () => {
 
                   <div className="flex flex-col gap-4 mb-8 mt-4">
                       <div className='flex flex-col gap-3'>
-                        <span className="text-zinc-400 font-semibold">Size:</span>
+                        <span className="text-zinc-400 font-semibold">Size: </span>
                           <ul className='flex gap-3'>
                             {
+                            product.sizes[0].height && product.sizes[0].width && product.sizes[0].depth ?
+                            <>
+                              <li>
+                                
+                                <button className={`py-2 px-4 rounded-lg text-center ${selectedSize === product.sizes[0].height ? 'bg-yellow-700 text-white' : 'bg-orange-100 text-black'}`} onClick={() => handleSizeClick(product.sizes[0].height)}
+                                  >                                   
+                                  H: {product.sizes[0].height}
+                                </button>
+                              </li>
+
+                              <li>
+                                <button className={`py-2 px-4 rounded-lg text-center ${selectedSize === product.sizes[0].width ? 'bg-yellow-700 text-white' : 'bg-orange-100 text-black'}`} onClick={() => handleSizeClick(product.sizes[0].width)}
+                                  >
+                                  W: {product.sizes[0].width}
+                                </button>
+                              </li>
+                              
+                              <li>
+                                <button className={`py-2 px-4 rounded-lg text-center ${selectedSize === product.sizes[0].depth ? 'bg-yellow-700 text-white' : 'bg-orange-100 text-black'}`} onClick={() => handleSizeClick(product.sizes[0].depth)}
+                                  >
+                                  D: {product.sizes[0].depth}
+                                </button>
+                              </li>
+                            </>                                                                                
+
+                              :
                               product.sizes.map((size) => (
-                                <li><button className="py-2 px-4 rounded-lg bg-orange-100 text-center">{size}</button></li>
+                                <>
+                                  <li key={size}><button  className={`py-2 px-4  rounded-lg text-center ${selectedSize === size ? 'bg-yellow-700 text-white' : 'bg-orange-100 text-black'}`}
+                                  onClick={() => handleSizeClick(size)}>{size}</button></li>
+                                </> 
                               ))
                             }
                           </ul>
@@ -84,7 +126,7 @@ const ProductSelected:React.FC<productsProps> = () => {
                           <ul className='flex gap-4'>
                             {
                               product.colors.map((color) => (
-                                <li><button className='p-4 rounded-full' style={{backgroundColor: color.hex}} ></button></li>
+                                <li key={color.name}><button className={`p-4 rounded-full ${seletedColor === color ? 'border border-black' : 'border-none'}`} style={{backgroundColor: color.hex}} onClick={() => handleColorClick(color)}></button></li>
                               ))
                             }
                           </ul>
@@ -104,13 +146,13 @@ const ProductSelected:React.FC<productsProps> = () => {
                       <p>SKU   : {product.sku}</p>
                       <p>Category   : {product.category}</p>
                       <p>Tags   : {product.tags.map((tag) => tag)}</p>
-                      <p className='flex items-center gap-3'>Share   : 
-                      <ul className='flex gap-3'>
-                        <i className='fab fa-facebook text-black'></i>
-                        <i className='fab fa-linkedin text-black'></i>
-                        <i className='fab fa-twitter text-black'></i>  
-                      </ul>
-                      </p>
+                      <span className='flex items-center gap-3'>Share   : 
+                        <ul className='flex gap-3'>
+                          <li><i className='fab fa-facebook text-black'></i></li>
+                          <li><i className='fab fa-linkedin text-black'></i></li>
+                          <li><i className='fab fa-twitter text-black'></i></li>  
+                        </ul>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -120,7 +162,7 @@ const ProductSelected:React.FC<productsProps> = () => {
               <div className='flex justify-center my-10 gap-6'>
                 <h1 onClick={() => setClickDescription(true)} className={ clickDescription ? 'md:text-xl text-lg font-medium cursor-pointer' : 'md:text-xl text-lg text-zinc-400 font-medium cursor-pointer'}>Description</h1>
                 <h1 onClick={() => setClickDescription(!clickDescription)} className={ clickDescription ? 'md:text-xl text-lg text-zinc-400 font-medium cursor-pointer' : 'md:text-xl text-lg  font-medium cursor-pointer'}>Additional Information</h1>
-                <h1 className='md:text-xl text-lg text-zinc-400 font-medium cursor-pointer'>Reviews [5]</h1>
+                <h1 className='md:text-xl text-lg text-zinc-400 font-medium cursor-pointer'>Reviews [{product.rating}]</h1>
               </div>
 
               <div className='text-zinc-400 text-justify flex flex-col gap-8 items-center w-full h-42'>
@@ -132,7 +174,7 @@ const ProductSelected:React.FC<productsProps> = () => {
                   </>  
                   :
                   <>
-                    <textarea name="text" placeholder='Additional Information' className='w-3/5 h-full pt-4 pl-6 text-black border boder-zinc-500 rounded-md focus:outline-none' id="text"></textarea>
+                    <textarea name="text" placeholder='Additional Information' className='w-3/5 h-full pt-4 pl-6 text-black border-2 boder-neutral-900 rounded-md focus:outline-none' id="text"></textarea>
                   </>
                 }
               </div>
@@ -146,16 +188,18 @@ const ProductSelected:React.FC<productsProps> = () => {
             </section>
 
             <section className=' border-t flex flex-col items-center pt-16 pb-16 border-zinc-300'>
-                <h1 className='text-2xl font-medium mb-4'>Related products</h1>
+                <h1 className='text-2xl font-medium mb-8'>Related products</h1>
                 <div className='flex items-center md:flex-wrap md:flex-row gap-6 flex-col '>
-                  <RelatedProducts products={products.slice(0,4)} />
+                  <RelatedProducts products={products} category={product.category} />
                 </div>
                 <BotaoShowMore />
             </section>
         </>
         )
         :
-        ''
+        <section className='flex justify-center pt-20'>
+          <h1 className='text-3xl font-bold'>Produto não encontrado!</h1>
+        </section>
       }
     </> 
   )

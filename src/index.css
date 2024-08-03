@@ -23,3 +23,72 @@
 .flip-horizontal {
     transform: scaleX(-1);
 }
+
+/* .carousel {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+  /* }
+  
+  .carousel-images {
+    display: flex;
+    transition: transform 0.3s ease;
+  }
+  
+  .carousel-image-container {
+    position: relative;
+    flex: 0 0 auto;
+    margin: 0 5px;
+  }
+  
+  .carousel-image {
+    width: 100px; /* Tamanho padrão das imagens */
+    /* height: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .carousel-image.selected {
+    width: 150px; /* Tamanho da imagem selecionada */
+     /* transform: scale(1.2);  Opcional: efeito de zoom 
+  } */ 
+  
+  /* .overlay-content {
+    position: absolute;
+    bottom: 0;
+    /* left: 0; */
+    /* right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    height: 100%;
+    pointer-events: none; Impede interação com o conteúdo sobreposto
+  } */ 
+  
+  /* .text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; */
+  /* } */ 
+/*   
+  .bg-white {
+    background-color: white;
+    color: black;
+  }
+  
+  .carousel-control {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  } */
+

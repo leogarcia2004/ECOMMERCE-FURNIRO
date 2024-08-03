@@ -4,20 +4,21 @@ import selo_new from '../../assets/shop/selo_new.png'
 import selo_desconto from '../../assets/shop/selo_descount.png'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Carrinho from '../Carrinho'
-import { IProduct, productsProps } from '../PropsProduct'
+// import { useCarrinho } from '../../contexts/CarrinhoContext'
+import { IProduct, relatedProps } from '../PropsProduct'
 
-const RelatedProducts:React.FC<productsProps> = ({products}) => {
+const RelatedProducts:React.FC<relatedProps> = ({products, category}) => {
+
+
     const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
-    const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(false);
+    // const {handleBuy} = useCarrinho()
+    const relatedProducts = products.filter(product => product.category === category).slice(0, 4);
   
     const handleBuy = (id: number) => {
       
-      const product = products.find((product) => product.id === id);
+      const product = relatedProducts.find((product) => product.id === id);
       if (product) {
         setCartProducts((prevCartProducts) => [...prevCartProducts, product]); 
-        console.log(product);
-        console.log(cartProducts);
       }
     }
   
@@ -35,7 +36,7 @@ const RelatedProducts:React.FC<productsProps> = ({products}) => {
   
     return (
         <>
-          {products.map((product) => (
+          {relatedProducts.map((product) => (
           product.new ?
           <div onClick={() => handleProductClick(product)} className='card-father cursor-pointer'>
   
@@ -55,15 +56,15 @@ const RelatedProducts:React.FC<productsProps> = ({products}) => {
   
                 <button  onClick={(e) => doubleFunc(e, product.id)} className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'>Add to cart</button>
                 <div className='flex justify-center gap-2 text-xs text-white font-semibold'>
-                  <div className='flex gap-1'>
+                  <div className='flex items-center gap-1'>
                     <i className="fas fa-share-alt "></i>
                     Share
                   </div>
-                  <div className='flex gap-1'>
+                  <div className='flex items-center gap-1'>
                     <i></i>
                     Compare
                   </div>
-                  <div className='flex gap-1'>
+                  <div className='flex items-center gap-1'>
                     <i className="far fa-heart"></i>
                     Like
                   </div>
@@ -99,7 +100,7 @@ const RelatedProducts:React.FC<productsProps> = ({products}) => {
                         <i className="fas fa-share-alt "></i>
                         Share
                       </div>
-                      <div className='flex gap-1'>
+                      <div className='flex items-center gap-1'>
                         <i></i>
                         Compare
                       </div>
@@ -113,7 +114,7 @@ const RelatedProducts:React.FC<productsProps> = ({products}) => {
           </div>
         ))}
   
-        <Carrinho products={cartProducts} isOpen={carrinhoOpen} setCarrinhoOpen={() => setCarrinhoOpen(!carrinhoOpen)} />
+
         </>
         
       

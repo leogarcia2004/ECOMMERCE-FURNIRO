@@ -7,36 +7,25 @@ import Footer from './components/Footer'
 import ProductSelected from './components/Product/ProductSelected'
 import Cart from './components/Cart/Cart'
 import Checkout from './components/Checkout/Checkout'
-import { useState, useEffect } from 'react'
+import Carrinho from './components/Carrinho.tsx'
+import CarrinhoContext from './contexts/CarrinhoContext.tsx'
 
 function App() {
-
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    const productsFunc = async () => {
-
-         const response = await fetch('http://localhost:3000/products')
-
-         const data = await response.json()
-         setProducts(data)
-    }
-    productsFunc()
-}, [])
-
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop" element={<Shop /> } />
-        <Route path="/productselected/:id" element={<ProductSelected />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout /> } />
-        <Route path="/contact" element={<Contact /> } />
-      </Routes>
-      <Footer />
+      <CarrinhoContext >
+        <Carrinho />
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<Shop /> } />
+          <Route path="/productselected/:id" element={<ProductSelected />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout /> } />
+          <Route path="/contact" element={<Contact /> } />
+        </Routes>
+        <Footer />
+      </CarrinhoContext>
     </>
   )
 }

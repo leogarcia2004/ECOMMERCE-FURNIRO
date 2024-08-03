@@ -70,7 +70,7 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
           </div>
 
             
-          <button type="submit" className=' p-2 bg-yellow-500 hover:bg-yellow-600 text-white border rounded-sm font-semibold border-none'>Submit</button>
+          <button type="submit" className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
       </form>
       </div>
       

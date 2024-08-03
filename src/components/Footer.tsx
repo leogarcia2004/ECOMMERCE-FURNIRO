@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="flex flex-col items-center border-t border-slate-300 w-full h-fit ">
 
-    <div className="flex gap-20 w-10/12 py-12">
+    <div className="flex md:flex-row flex-col gap-20 w-10/12 py-12">
 
       <div className="w-64 flex flex-col gap-10 mr-12 ">
         <h2 className="font-bold text-2xl ">Funiro.</h2>
@@ -33,25 +33,24 @@ const Footer = () => {
         </nav>
       </div>
 
-      <div>
-        <h4 className="text-gray-400 font-medium mb-12 mr-12">Links</h4>
-
-        <ul className="flex flex-col gap-8">
-          <li className="font-semibold">Home</li>
-          <li className="font-semibold">Shop</li>
-          <li className="font-semibold">About</li>
-          <li className="font-semibold">Contact</li>
-        </ul>
-      </div>
-
-      <div>
-      <h4 className="text-gray-400 font-medium mb-12">Help</h4>
-
-      <ul className="flex flex-col gap-8">
-        <li className="font-semibold">Payment Options</li>
-        <li className="font-semibold">Returns</li>
-        <li className="font-semibold">Privacy Policies</li>
-      </ul>
+      <div className='flex gap-28'>
+        <div>
+          <h4 className="text-gray-400 font-medium mb-12 mr-12">Links</h4>
+          <ul className="flex flex-col gap-8">
+            <li className="font-semibold">Home</li>
+            <li className="font-semibold">Shop</li>
+            <li className="font-semibold">About</li>
+            <li className="font-semibold">Contact</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-gray-400 font-medium mb-12">Help</h4>
+          <ul className="flex flex-col gap-8">
+            <li className="font-semibold">Payment Options</li>
+            <li className="font-semibold">Returns</li>
+            <li className="font-semibold">Privacy Policies</li>
+          </ul>
+        </div>
       </div>
 
       <div>
