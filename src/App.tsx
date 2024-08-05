@@ -9,8 +9,12 @@ import Cart from './components/Cart/Cart'
 import Checkout from './components/Checkout/Checkout'
 import Carrinho from './components/Carrinho.tsx'
 import CarrinhoContext from './contexts/CarrinhoContext.tsx'
+import LoginForm from './components/login/LoginForm.tsx'
+import Register from './components/register/Register.tsx'
 
 function App() {
+
+
   return (
     <>
       <CarrinhoContext >
@@ -23,6 +27,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout /> } />
           <Route path="/contact" element={<Contact /> } />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />
       </CarrinhoContext>

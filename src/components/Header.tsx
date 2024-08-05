@@ -1,23 +1,12 @@
 
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo_header.png'
-import LoginForm from './LoginForm'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCarrinho } from '../contexts/CarrinhoContext'
 
 const Header = () => {
 
-    const [isOpen, setIsOpen] = useState<boolean>(true)
-    const { carrinhoOpen, setCarrinhoOpen }  = useCarrinho();
-
-    const loginOpen = () => {
-        setIsOpen(!isOpen)
-      }
-
-    const CarrinhoClick = () => {
-        setCarrinhoOpen(!carrinhoOpen)
-    }
+    const { setCarrinhoOpen }  = useCarrinho();
 
     const navigate = useNavigate()
 
@@ -25,6 +14,7 @@ const Header = () => {
 
         navigate('/')
     }
+
 
   return (
     <header className='bg-white flex flex-col gap-4 items-center justify-center md:justify-between font-semibold md:items-center md:flex-row py-6 w-full md:h-20 h-fit top-0 sticky z-10'>
@@ -52,15 +42,17 @@ const Header = () => {
         </nav>
 
             <div className='flex justify-center md:pr-20 gap-8'>
-                <button>
-                    <i onClick={loginOpen} className="fas fa-user-injured fa-lg cursor-pointer"></i>
-                </button>
+                <nav>
+                    <button>
+                        <Link to={"/login"}><i  className="fas fa-user-injured fa-lg cursor-pointer"></i></Link>
+                    </button>
+                </nav>
                 <button>
                     <i onClick={() => setCarrinhoOpen(true)} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
                 </button>
             </div>
             
-        <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} />
+        {/* <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} /> */}
     </header>
   )
 }

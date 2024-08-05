@@ -1,25 +1,24 @@
 
 import React, { useState, FormEvent } from 'react'
-import { validate } from '../utils/validate'
-import { User } from '../types/User'
+import { validate } from '../../utils/validate'
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from '../../services/firebaseConfig'
+import { User } from '../../types/User'
 
-interface FormProps {
-  isOpen: boolean;
-  setFormOpen: () => void;
-
-}
-
-const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => { 
+const Register: React.FC = () => { 
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<User | null>(null) 
 
+  const [createUserWithEmailAndPassword, user, loading, error] =
+  useCreateUserWithEmailAndPassword(auth);
 
-  const handleSubmit = (e: FormEvent) => {
+  function handleSignOut(e) {
+    e.preventDefault();
+    createUserWithEmailAndPassword(email, password);
 
-    e.preventDefault() 
     const data: User = { name, email, password } 
 
     const validadeErros = validate(data) 
@@ -32,18 +31,19 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
     setErrors(null) 
     setName('') 
     setEmail('') 
-    setPassword('')  
+    setPassword('') 
   }
+
+if (loading) {
+  return <p>carregando...</p>;
+}
   
-  if(!isOpen) {
     return (
 
-      <div className={isOpen ? ' fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center ' : 'fixed top-0 bg-white h-screen w-full  py-16 m-auto flex flex-col justify-center items-center '}>
-
-        <i onClick={setFormOpen} className='fa-solid fa-circle-xmark cursor-pointer text-zinc-500 absolute right-4 top-3'></i>
+      <div className=' fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center '>
 
         <h1 className=' text-center mb-6 font-bold text-3xl'>Cadastre-se!</h1>
-        <form onSubmit={handleSubmit} className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
+        <form className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
 
           <div className='flex flex-col mb-3 gap-1.5'>
             <label htmlFor="name">Nome</label>
@@ -70,14 +70,12 @@ const LoginForm: React.FC<FormProps> = ({isOpen, setFormOpen}) => {
           </div>
 
             
-          <button type="submit" className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
+          <button onClick={handleSignOut} className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
       </form>
       </div>
       
     )
-  } 
   
-  return null
 }
 
-export default LoginForm
+export default Register

@@ -16,7 +16,7 @@ interface ModalContextData {
   quantities: { [key: number]: number };
   addQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
-  // getProducts: () => void;
+  removeCart: (id: number) => void;
 }
 
   const ModalContext = createContext( {} as ModalContextData );
@@ -29,12 +29,26 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const handleBuy = (id: number) => {
-    
     const product = products.find((product) => product.id === id);
     if (product) {
-      setCartProducts((prevCartProducts) => [...prevCartProducts, product]); 
+      setCartProducts((prevCartProducts) => {
+        const isProductInCart = prevCartProducts.some((cartProduct) => cartProduct.id === id);
+        if (isProductInCart) {
+          setQuantities((prevQuantities) => ({
+            ...prevQuantities,
+            [id]: prevQuantities[id] + 1,
+          }));
+          return prevCartProducts;
+        } else {
+          setQuantities((prevQuantities) => ({
+            ...prevQuantities,
+            [id]: 1,
+          }));
+          return [...prevCartProducts, product];
+        }
+      });
     }
-  }
+  };
   
   const amount = cartProducts.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
@@ -55,6 +69,25 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
       [id]: Math.max((prevQuantities[id] || 1) - 1, 1),
     }));
   };
+
+  const removeCart = (id: number) => {
+
+    setCartProducts((prevCartProducts) => {
+      const index = prevCartProducts.findIndex((product) => product.id === id);
+      if (index === -1) {
+        return prevCartProducts;
+      }
+      const newCartProducts = [...prevCartProducts];
+      newCartProducts.splice(index, 1);
+      return newCartProducts;
+    });
+    setQuantities((prevQuantities) => {
+      const newQuantities = { ...prevQuantities };
+      delete newQuantities[id];
+      return newQuantities;
+    });
+  }
+
 
   // const sameProduct = (id: number) => {
 
@@ -78,7 +111,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart}}>
         {children}
       </ModalContext.Provider>
     </div>

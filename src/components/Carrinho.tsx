@@ -8,14 +8,9 @@ import { useCarrinho } from '../contexts/CarrinhoContext'
 
 const Carrinho: React.FC = () => {
 
-  const {carrinhoOpen, setCarrinhoOpen, cartProducts, amount, quantities} = useCarrinho();
-
+  const {carrinhoOpen, setCarrinhoOpen, cartProducts, amount, quantities, removeCart} = useCarrinho();
   const [clicked, setClicked] = useState(true);
   
-  const handleClick = () => {
-      setClicked(!clicked)                          
-  }
-
   const navigate = useNavigate();
 
   const navigateCart = () => {
@@ -47,7 +42,7 @@ const Carrinho: React.FC = () => {
                   <p className='text-sm'><span className='text-base'>{quantities[product.id] || 1}</span> X <span className='text-yellow-600 text-sm'>{ product.new ? product.normalPrice : product.salePrice}</span></p>
                 </div>
 
-                <i onClick={handleClick} className='fa-solid text-gray-400 fa-circle-xmark cursor-pointer'></i>     
+                <i onClick={() => removeCart(product.id)} className='fa-solid text-gray-400 fa-circle-xmark cursor-pointer'></i>     
               </div>
             ))
            :

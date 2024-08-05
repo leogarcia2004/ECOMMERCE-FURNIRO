@@ -4,10 +4,9 @@ import ImagemApresentacaoPage from '../ImagemApresentacaoPage'
 import Informacoes from '../Informacoes'
 import trash from '../../assets/cart/trash.png'
 import { useCarrinho } from '../../contexts/CarrinhoContext'
-import {productsProps} from '../PropsProduct'
 import { useNavigate } from 'react-router-dom'
 
-const Cart:React.FC<productsProps> = () => {
+const Cart:React.FC = () => {
 
   const navigate = useNavigate()
 

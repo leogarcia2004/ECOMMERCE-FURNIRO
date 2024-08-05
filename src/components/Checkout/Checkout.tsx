@@ -5,11 +5,10 @@ import ImagemApresentacaoPage from '../ImagemApresentacaoPage'
 import Informacoes from '../Informacoes'
 import { FormEvent } from 'react'
 import { useState } from 'react'
-import {productsProps} from '../PropsProduct'
 import { ValidateCheckout } from '../../utils/ValidateCheckout'
 import { UserCheckout } from '../../types/User'
 
-const Checkout:React.FC<productsProps> = () => {
+const Checkout:React.FC = () => {
 
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
@@ -47,6 +46,8 @@ const Checkout:React.FC<productsProps> = () => {
             setErrors(validadeErros) 
             return
         }
+
+        
     }
 
     const {quantities, amount, cartProducts} = useCarrinho()
