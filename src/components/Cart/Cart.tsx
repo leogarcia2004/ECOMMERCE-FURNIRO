@@ -5,8 +5,15 @@ import Informacoes from '../Informacoes'
 import trash from '../../assets/cart/trash.png'
 import { useCarrinho } from '../../contexts/CarrinhoContext'
 import {productsProps} from '../PropsProduct'
+import { useNavigate } from 'react-router-dom'
 
 const Cart:React.FC<productsProps> = () => {
+
+  const navigate = useNavigate()
+
+    const navigateCart = () => {
+        navigate('/checkout')
+    }
 
 
   const {amount, quantities, addQuantity, decreaseQuantity, cartProducts} = useCarrinho()
@@ -62,7 +69,7 @@ const Cart:React.FC<productsProps> = () => {
       </div>
     </div>
 
-    <button className='py-2 px-10 border border-black rounded-xl'>Check out</button>
+    <button onClick={navigateCart} className='py-2 px-10 border border-black rounded-xl'>Check out</button>
   </div>
 </section>
 

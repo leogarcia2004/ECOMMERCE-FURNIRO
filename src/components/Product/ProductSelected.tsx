@@ -1,5 +1,4 @@
 
-
 import { useState } from 'react'
 import BotaoShowMore from '../BotaoShowMore'
 import { useLocation } from 'react-router-dom'
@@ -29,6 +28,19 @@ const ProductSelected:React.FC  = () => {
   const handleImageClick = (image) => {
     setSeletedImage(image.target.src)
   }
+
+  const renderStars = (rating) => {
+    const totalStars = 5;
+    const stars = [];
+    for (let i = 1; i <= totalStars; i++) {
+      if (i <= rating) {
+        stars.push(<i key={i} className="fas fa-star text-yellow-300"></i>);
+      } else {
+        stars.push(<i key={i} className="fas fa-star text-gray-300"></i>);
+      }
+    }
+    return stars;
+  };
 
   return (
     <>
@@ -63,12 +75,8 @@ const ProductSelected:React.FC  = () => {
                     <h1 className="text-4xl font-semibold mb-2">{product.title}</h1>
                     <p className="text-gray-400 text-lg font-medium mb-3">Rs. {product.new ? product.normalPrice : product.salePrice}</p>
                     <div className="flex  text-zinc-400 ">
-                        <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
-                        <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
-                        <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
-                        <i className="fas fa-star h-10 mr-1.5 text-yellow-300"></i>
-                        <i className="fas fa-star h-10 mr-5 text-yellow-300"></i>
-                        {product.rating} Costumer Review
+                        {renderStars(product.rating)}
+                        <span className='ml-1.5'>{product.rating} Costumer Review</span>
                   </div>
 
                   <p className="text-gray-700 w-full pr-4">

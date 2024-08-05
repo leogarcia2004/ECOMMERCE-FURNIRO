@@ -6,22 +6,23 @@ import Informacoes from '../Informacoes'
 import { FormEvent } from 'react'
 import { useState } from 'react'
 import {productsProps} from '../PropsProduct'
+import { ValidateCheckout } from '../../utils/ValidateCheckout'
+import { UserCheckout } from '../../types/User'
 
 const Checkout:React.FC<productsProps> = () => {
 
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
     const [company, setCompany] = useState<string>('')
-    const [zipcode, setZipcode] = useState<string>('')
-    const [countryeRegion, setCountryeRegion] = useState<string>('')
-    const [address, setAddress] = useState<string>('')
-    const [townecity, setTownecity] = useState<string>('')
+    const [zipCode, setZipcode] = useState<string>('')
+    const [country, setCountry] = useState<string>('')
+    const [emailAdress, setEmailAdress] = useState<string>('')
+    const [city, setCity] = useState<string>('')
     const [province, setProvince] = useState<string>('')
-    const [addaddress, setAddaddress] = useState<string>('')
-    const [emailaddress, setEmailaddress] = useState<string>('')
+    const [onAdress, setOnAdress] = useState<string>('')
+    const [street, setStreet] = useState<string>('')
     const [message, setMessage] = useState<string>('')
-
-    
+    const [errors, setErrors] = useState<UserCheckout | null>(null) 
 
     const handleSubmit = (e: FormEvent) => {
 
@@ -31,16 +32,25 @@ const Checkout:React.FC<productsProps> = () => {
         setLastName('')
         setCompany('')
         setZipcode('')
-        setCountryeRegion('')
-        setAddress('')
-        setTownecity('')
+        setCountry('')
+        setEmailAdress('')
+        setCity('')
         setProvince('')
-        setAddaddress('')
-        setEmailaddress('')
+        setStreet('')
+        setOnAdress('')
         setMessage('')
+
+        const data: UserCheckout = { firstName, lastName, emailAdress, onAdress, zipCode, city, street, country, province } 
+        const validadeErros = ValidateCheckout(data) 
+
+        if(Object.keys(validadeErros).length > 0) {
+            setErrors(validadeErros) 
+            return
+        }
     }
 
     const {quantities, amount, cartProducts} = useCarrinho()
+
 
   return (
     <div>
@@ -55,10 +65,17 @@ const Checkout:React.FC<productsProps> = () => {
                         <div className='flex flex-col gap-3'>
                             <label className='font-semibold' htmlFor='firstname'>First Name</label>
                             <input value={firstName} onChange={(e) => setFirstName(e.target.value)}  className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' required type='text'  id='firstname' />
+                            {errors?.firstName && (
+                                <small className="text-xs text-red-500 mt-1">{errors?.firstName}</small>
+                            )}
                         </div>
+
                         <div className='flex flex-col gap-3'>
                             <label className='font-semibold' htmlFor='lastname'>Last Name</label>
                             <input value={lastName} onChange={(e) => setLastName(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' required type='text' id='lastname' />
+                            {errors?.lastName && (
+                                <small className="text-xs text-red-500 mt-1">{errors?.lastName}</small>
+                            )}
                         </div>
                     </div>
                     
@@ -68,31 +85,52 @@ const Checkout:React.FC<productsProps> = () => {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='zipcode'>ZIP code</label>
-                        <input value={zipcode} onChange={(e) => setZipcode(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='zipcode' />
+                        <input value={zipCode} onChange={(e) => setZipcode(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='zipcode' />
+                        {errors?.zipCode && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.zipCode}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='countryeregion'>Country / Region</label>
-                        <input value={countryeRegion} onChange={(e) => setCountryeRegion(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='countryeregion' />
+                        <input value={country} onChange={(e) => setCountry(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='countryeregion' />
+                        {errors?.country && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.country}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='address'>Street address</label>
-                        <input value={address} onChange={(e) => setAddress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='address' />
+                        <input value={street} onChange={(e) => setStreet(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='address' />
+                        {errors?.street && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.street}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='townecity'>Town / City</label>
-                        <input value={townecity} onChange={(e) =>  setTownecity(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='townecity' />
+                        <input value={city} onChange={(e) =>  setCity(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='townecity' />
+                        {errors?.city && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.city}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='province'>Province</label>
                         <input value={province} onChange={(e) => setProvince(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='province' />
+                        {errors?.province && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.province}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='addaddress'>Add-on address</label>
-                        <input value={addaddress} onChange={(e) => setAddaddress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='addaddress' />
+                        <input value={onAdress} onChange={(e) => setOnAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='addaddress' />
+                        {errors?.onAdress && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.onAdress}</small>
+                        )}
                     </div>
                     <div className='flex flex-col gap-3'>
-                        <label className='font-semibold' htmlFor='emailadress'>Email address</label>
-                        <input value={emailaddress} onChange={(e) => setEmailaddress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='email' id='emailaddress' />
+                    <label className='font-semibold' htmlFor='addaddress'>Email address</label>
+                        <input value={emailAdress} onChange={(e) => setEmailAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='address' />
+                        {errors?.emailAdress && (
+                            <small className="text-xs text-red-500 mt-1">{errors?.emailAdress}</small>
+                        )}
                     </div>
                     <div>
                         <input value={message} onChange={(e) => setMessage(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required placeholder='Digite uma mensagem aqui...' type='text' id='lastname' />
@@ -105,14 +143,16 @@ const Checkout:React.FC<productsProps> = () => {
                             <span>Product</span>
                             <span>Subtotal</span>
                         </div>
-                        <div className='flex h-44 gap-16 justify-between overflow-y-auto'>
+                        <div className=' max-h-44 gap-16 justify-between overflow-y-auto'>
+                            <ul className='flex flex-col'>
                             {cartProducts.map(product => (
-                                <>
-                                    <span className='text-zinc-400'>{product.title} <strong className='text-black'>x {quantities[product.id] || 1}</strong></span>
-                                    <span> Rs. { product.new ? product.salePrice : product.normalPrice}</span>
-                                </>
-                                
+                                <li className='flex justify-between gap-3'>
+                                <span className='text-zinc-400 w-72'>{product.title} <strong className='text-black'>x {quantities[product.id] || 1}</strong></span>
+                                <span> Rs. { product.new ? product.salePrice : product.normalPrice}</span>
+                            </li> 
                             ))}
+                            </ul>
+                            
                             
                         </div>
                         <div className='flex gap-16 justify-between'>

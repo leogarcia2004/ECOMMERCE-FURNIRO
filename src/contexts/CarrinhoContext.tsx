@@ -38,7 +38,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   
   const amount = cartProducts.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
-    const price = product.new ? product.salePrice : product.normalPrice;
+    const price = product.new ? product.normalPrice : product.salePrice ;
     return acc + (price * quantity);
   }, 0)
 

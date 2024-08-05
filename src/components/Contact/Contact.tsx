@@ -1,9 +1,34 @@
 import ImagemApresentacaoPage from "../ImagemApresentacaoPage"
 import Informacoes from "../Informacoes"
+import { validateContact } from '../../utils/validateContact'
+import { UserContact } from '../../types/User'
+import { FormEvent, useState } from "react"
+
+const Contact:React.FC = () => {
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [errors, setErrors] = useState<UserContact | null>(null) 
 
 
+  const handleSubmit = (e: FormEvent) => {
 
-const Contact = () => {
+    e.preventDefault() 
+    const data: UserContact = { name, email } 
+
+    const validadeErros = validateContact(data) 
+
+    if(Object.keys(validadeErros).length > 0) {
+      setErrors(validadeErros) 
+      return
+    }
+
+    setErrors(null) 
+    setName('') 
+    setEmail('') 
+    setPassword('')  
+  }
+  
   return (
     <div>
       <ImagemApresentacaoPage title="Contact" />
@@ -41,16 +66,22 @@ const Contact = () => {
         </div>
 
           
-          <form className="flex flex-col gap-8">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
             <div className="flex flex-col gap-3">
               <label className="font-semibold" htmlFor="">Your name</label>
-              <input className="w-96 h-16 border border-zinc-400 rounded-md px-4 focus:outline-none" type="text" required placeholder="abc" />
+              <input className="w-96 h-16 border border-zinc-400 rounded-md px-4 focus:outline-none" value={name} onChange={(e) => setName(e.target.value)} type="text" required placeholder="abc" />
+              {errors?.name && (
+              <small className="text-xs text-red-500 mt-1">{errors?.name}</small>
+            )}
             </div>
 
             <div className="flex flex-col gap-3">
               <label className="font-semibold"  htmlFor="">Email adress</label>
-              <input className="w-96 h-16 border border-zinc-400 rounded-md px-4 focus:outline-none" type="email" required placeholder="person123@hotmail.com" />
+              <input className="w-96 h-16 border border-zinc-400 rounded-md px-4 focus:outline-none" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="person123@hotmail.com" />
+              {errors?.email && (
+              <small className="text-xs text-red-500 mt-1">{errors?.email}</small>
+            )}
             </div>
 
             <div className="flex flex-col gap-3">
