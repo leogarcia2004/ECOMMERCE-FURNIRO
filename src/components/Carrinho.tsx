@@ -8,28 +8,10 @@ import { useCarrinho } from '../contexts/CarrinhoContext'
 
 const Carrinho: React.FC = () => {
 
-  const {carrinhoOpen, setCarrinhoOpen, cartProducts} = useCarrinho();
+  const {carrinhoOpen, setCarrinhoOpen, cartProducts, amount, quantities} = useCarrinho();
 
   const [clicked, setClicked] = useState(true);
-  // const [amount, setAmount] = useState(0);
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-
-  // const CalcAmount = () => {
-  // //   let total = 0;
-  // //   for (const product of products) {
-  // //     const quantity = quantities[product.id] || 1;
-  // //     const price = product.new ? product.salePrice : product.normalPrice;
-  // //     total += price * quantity;
-  // //   }
-  // //   setAmount(total);
-  // // }
   
-  let amount = cartProducts.reduce((acc, product) => {
-    const quantity = quantities[product.id] || 1;
-    const price = product.new ? product.salePrice : product.normalPrice;
-    return acc + (price * quantity);
-  }, 0);
-
   const handleClick = () => {
       setClicked(!clicked)                          
   }
@@ -45,7 +27,7 @@ const Carrinho: React.FC = () => {
   }
 
   return (
-    <div  className={carrinhoOpen ? 'fixed top-0 right-0 z-50 items-center pt-8 bg-white duration-300 border-l border-text-slate-200 flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] w-72 ' : 'fixed top-0 right-[-500px] z-50 bg-white duration-300 border-l  flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] md-72' }>
+    <div  className={carrinhoOpen ? 'fixed top-0 right-0 z-50 items-center pt-8 bg-white duration-300 border-l border-text-slate-200 flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] w-full ' : 'fixed top-0 right-[-700px] z-50 bg-white duration-300 border-l flex flex-col pb-5 px-4 justify-between h-screen md:w-[400px] md-72' }>
         
           <div className='flex w-fit gap-16'>
             <div className='border-spacing-x-28 border-b border-zinc-300 pb-6 pr-20 '>
@@ -58,11 +40,11 @@ const Carrinho: React.FC = () => {
           { clicked ?
           cartProducts.map(product => ( 
               <div key={product.id} className='flex items-center w-full justify-between p-1.5 px-6 rounded-lg'>
-                <img src={product.images.mainImage} alt="" className='h-20 bg-pink_fundo rounded-md' />
+                <img src={product.images.mainImage} alt="" className='h-20 mr-2 bg-pink_fundo rounded-md' />
 
                 <div className='flex flex-col justify-center gap-2 '>
                   <h3 className='text-neutral-900 '> {product.title} </h3>
-                  <p className='text-sm'><span className='text-base'>{quantities[product.id] || 1}</span> X <span className='text-yellow-600 text-sm'>{ product.new ? product.salePrice : product.normalPrice}</span></p>
+                  <p className='text-sm'><span className='text-base'>{quantities[product.id] || 1}</span> X <span className='text-yellow-600 text-sm'>{ product.new ? product.normalPrice : product.salePrice}</span></p>
                 </div>
 
                 <i onClick={handleClick} className='fa-solid text-gray-400 fa-circle-xmark cursor-pointer'></i>     

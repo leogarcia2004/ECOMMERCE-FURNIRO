@@ -2,25 +2,17 @@
 
 import selo_new from '../../assets/shop/selo_new.png'
 import selo_desconto from '../../assets/shop/selo_descount.png'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { useCarrinho } from '../../contexts/CarrinhoContext'
+import { useCarrinho } from '../../contexts/CarrinhoContext'
 import { IProduct, relatedProps } from '../PropsProduct'
 
 const RelatedProducts:React.FC<relatedProps> = ({products, category}) => {
 
 
-    const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
-    // const {handleBuy} = useCarrinho()
+    const {handleBuy} = useCarrinho()
     const relatedProducts = products.filter(product => product.category === category).slice(0, 4);
   
-    const handleBuy = (id: number) => {
-      
-      const product = relatedProducts.find((product) => product.id === id);
-      if (product) {
-        setCartProducts((prevCartProducts) => [...prevCartProducts, product]); 
-      }
-    }
+    
   
     const navigate = useNavigate();
   

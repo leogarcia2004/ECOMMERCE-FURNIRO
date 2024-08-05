@@ -5,22 +5,15 @@ import Informacoes from "../Informacoes";
 import filter from "../../assets/shop/filtering.png";
 import vector from "../../assets/shop/vectorr.png";
 import vector_1 from "../../assets/shop/vectorr_1.png";
+import { useCarrinho } from "../../contexts/CarrinhoContext";
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState(16); 
   const [localQuery, setLocalQuery] = useState('');
   const PRODUCTS_PER_PAGE = search; 
+  const {products} = useCarrinho()
 
-  useEffect(() => {
-    const productsFunc = async () => {
-      const response = await fetch('http://localhost:3000/products');
-      const data = await response.json();
-      setProducts(data);
-    };
-    productsFunc();
-  }, []);
 
   const filterProducts = useMemo(() => {
     return products.filter((product) => product.category.toLowerCase().includes(localQuery.toLowerCase()));

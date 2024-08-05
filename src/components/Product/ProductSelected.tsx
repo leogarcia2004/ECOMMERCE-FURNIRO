@@ -1,28 +1,22 @@
 
 
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BotaoShowMore from '../BotaoShowMore'
 import { useLocation } from 'react-router-dom'
 import RelatedProducts from './RelatedProducts'
+import { useCarrinho } from '../../contexts/CarrinhoContext'
 
 const ProductSelected:React.FC  = () => {
 
   const location = useLocation();
   const product = location.state?.product;
-  const [products, setProducts] = useState([])
   const [clickDescription, setClickDescription] = useState<boolean>(true)
   const [seletedImage, setSeletedImage] = useState<string>(product.images.mainImage)
   const [seletedColor, setSeletedColor] = useState(null)
   const [selectedSize, setSelectedSize] = useState(null);
 
-  useEffect(() => {
-    const productsFunc= async () => {
-         const response = await fetch('http://localhost:3000/products')
-         const data = await response.json()
-         setProducts(data)
-    }
-    productsFunc()
-  }, [])
+  const {products, handleBuy, quantities, addQuantity, decreaseQuantity} = useCarrinho()
+
 
   const handleSizeClick = (size) => {
     setSelectedSize(size);
@@ -135,9 +129,9 @@ const ProductSelected:React.FC  = () => {
 
                     <div className="flex items-center gap-4 mb-8 ">
                       <div className='border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-2'>
-                      <button>-</button> 1 <button>+</button>
+                      <button onClick={() => decreaseQuantity(product.id)}>-</button> {quantities[product.id] || 1} <button onClick={() => addQuantity(product.id)}>+</button>
                       </div>
-                      <button className="border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-3.5">
+                      <button onClick={() => handleBuy(product.id)} className="border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-3.5">
                         Add To Cart
                       </button>
                     </div>

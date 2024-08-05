@@ -12,6 +12,10 @@ interface ModalContextData {
   products: IProduct[];
   handleBuy: (id: number) => void;
   cartProducts: IProduct[];
+  amount: number;
+  quantities: { [key: number]: number };
+  addQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   // getProducts: () => void;
 }
 
@@ -22,6 +26,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(false);
   const [products, setProducts] = useState([])
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const handleBuy = (id: number) => {
     
@@ -30,6 +35,30 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
       setCartProducts((prevCartProducts) => [...prevCartProducts, product]); 
     }
   }
+  
+  const amount = cartProducts.reduce((acc, product) => {
+    const quantity = quantities[product.id] || 1;
+    const price = product.new ? product.salePrice : product.normalPrice;
+    return acc + (price * quantity);
+  }, 0)
+
+  const addQuantity = (id: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: (prevQuantities[id] || 1) + 1,
+    }));
+  };
+
+  const decreaseQuantity = (id: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: Math.max((prevQuantities[id] || 1) - 1, 1),
+    }));
+  };
+
+  // const sameProduct = (id: number) => {
+
+  // }
 
   const getProducts = () => {
     const productsFunc = async () => {
@@ -44,12 +73,12 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
 
   useEffect(() => {
     getProducts()
-}, [])
+  }, [])
   
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity}}>
         {children}
       </ModalContext.Provider>
     </div>

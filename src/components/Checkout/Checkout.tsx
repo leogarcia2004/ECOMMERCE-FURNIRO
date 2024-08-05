@@ -1,13 +1,13 @@
 
 
-import React from 'react'
+import { useCarrinho } from '../../contexts/CarrinhoContext'
 import ImagemApresentacaoPage from '../ImagemApresentacaoPage'
 import Informacoes from '../Informacoes'
 import { FormEvent } from 'react'
 import { useState } from 'react'
-import { set } from 'react-hook-form'
+import {productsProps} from '../PropsProduct'
 
-const Checkout = () => {
+const Checkout:React.FC<productsProps> = () => {
 
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
@@ -38,7 +38,9 @@ const Checkout = () => {
         setAddaddress('')
         setEmailaddress('')
         setMessage('')
-      }
+    }
+
+    const {quantities, amount, cartProducts} = useCarrinho()
 
   return (
     <div>
@@ -103,17 +105,23 @@ const Checkout = () => {
                             <span>Product</span>
                             <span>Subtotal</span>
                         </div>
-                        <div className='flex gap-16 justify-between'>
-                            <span className='text-zinc-400'>Asgaard sofa <strong className='text-black'>x 1</strong></span>
-                            <span> Rs. 250.000,00</span>
+                        <div className='flex h-44 gap-16 justify-between overflow-y-auto'>
+                            {cartProducts.map(product => (
+                                <>
+                                    <span className='text-zinc-400'>{product.title} <strong className='text-black'>x {quantities[product.id] || 1}</strong></span>
+                                    <span> Rs. { product.new ? product.salePrice : product.normalPrice}</span>
+                                </>
+                                
+                            ))}
+                            
                         </div>
                         <div className='flex gap-16 justify-between'>
                             <span className='font-medium'>Subtotal</span>
-                            <span>Rs. 250.000,00</span>
+                            <span>Rs. {amount.toFixed(2)}</span>
                         </div>
                         <div className='flex items-center gap-16 justify-between'>
                             <span className='font-medium'>Total</span>
-                            <span className='text-xl font-bold text-yellow-600'>Rs. 250.000,00</span>
+                            <span className='text-xl font-bold text-yellow-600'>Rs. {amount.toFixed(2)}</span>
                         </div>
                     </div>
 
