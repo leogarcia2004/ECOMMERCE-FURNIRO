@@ -12,13 +12,15 @@ const Cart:React.FC = () => {
   const {amount, quantities, addQuantity, decreaseQuantity, cartProducts, removeCart} = useCarrinho()
 
     const navigateCart = () => {
-        navigate('/checkout')
+        
         if(cartProducts.length === 0) {
-            alert('Seu carrinho está vazio, não é possível prossegui com a compra!')
+            alert('Seu carrinho está vazio, não é possível prosseguir com a compra!')
+            return
         }
+
+        navigate('/checkout')
+        
     }
-
-
  
   return (
     <div>
