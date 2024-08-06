@@ -22,6 +22,7 @@ const Checkout:React.FC = () => {
     const [street, setStreet] = useState<string>('')
     const [message, setMessage] = useState<string>('')
     const [errors, setErrors] = useState<UserCheckout | null>(null) 
+    const [clicked, setClicked] = useState<string>('')
 
     const handleSubmit = (e: FormEvent) => {
 
@@ -45,12 +46,14 @@ const Checkout:React.FC = () => {
         if(Object.keys(validadeErros).length > 0) {
             setErrors(validadeErros) 
             return
-        }
-
-        
+        }       
     }
 
     const {quantities, amount, cartProducts} = useCarrinho()
+
+    const handleClick = (id: string) => {
+        setClicked(id)
+    }
 
 
   return (
@@ -144,10 +147,10 @@ const Checkout:React.FC = () => {
                             <span>Product</span>
                             <span>Subtotal</span>
                         </div>
-                        <div className=' max-h-44 gap-16 justify-between overflow-y-auto'>
-                            <ul className='flex flex-col'>
+                        <div className=' max-h-44 gap-16 mb-2 justify-between overflow-y-auto'>
+                            <ul className='flex flex-col gap-2 overflow-y-auto'>
                             {cartProducts.map(product => (
-                                <li className='flex justify-between gap-3'>
+                                <li className='flex justify-between items-center gap-3'>
                                 <span className='text-zinc-400 w-72'>{product.title} <strong className='text-black'>x {quantities[product.id] || 1}</strong></span>
                                 <span> Rs. { product.new ? product.salePrice : product.normalPrice}</span>
                             </li> 
@@ -169,18 +172,18 @@ const Checkout:React.FC = () => {
                     <div className='pt-7 flex items-center flex-col gap-7'>
                         <div className='flex flex-col gap-3 items-start'>
                             <div className='flex items-center required gap-2 '>
-                                <input className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="bank" checked/>
+                                <input onClick={() => handleClick('bank')} className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="bank"/>
                                 <label htmlFor="bank">Direct Bank Transfer</label>
                             </div>
-                            <p className='text-zinc-400 text-justify'>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                            <p className={ clicked === 'bank' ? 'text-zinc-400 text-justify' : 'text-black text-justify'}>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                         </div>
 
                         <div className='flex flex-col gap-4 items-start'>
                             <div className='flex items-center required gap-2 '>
-                                <input className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="cash" />
+                                <input onClick={() => handleClick('cash')} className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="cash" />
                                 <label  htmlFor="cash">Cash On Delivery</label>
                             </div>
-                            <p className='text-black text-justify'>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <strong className='text-black'>privacy policy</strong>.</p>
+                            <p className={ clicked === 'cash' ? 'text-zinc-400 text-justify' : 'text-black text-justify'}>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <strong className='text-black'>privacy policy</strong>.</p>
                         </div>
 
                         <button type='submit' className='w-fit md:py-3 py-2 md:px-24 px-12 mt-2 border border-black rounded-xl font-medium text-neutral-900'>Place order</button>

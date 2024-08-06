@@ -44,15 +44,13 @@ const Header = () => {
             <div className='flex justify-center md:pr-20 gap-8'>
                 <nav>
                     <button>
-                        <Link to={"/login"}><i  className="fas fa-user-injured fa-lg cursor-pointer"></i></Link>
+                        <Link to={"/login"}><i className="fas fa-user fa-lg cursor-pointer"></i></Link>
                     </button>
                 </nav>
                 <button>
                     <i onClick={() => setCarrinhoOpen(true)} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
                 </button>
             </div>
-            
-        {/* <LoginForm isOpen={isOpen} setFormOpen={() => setIsOpen(!isOpen)} /> */}
     </header>
   )
 }

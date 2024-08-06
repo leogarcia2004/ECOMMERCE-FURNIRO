@@ -9,13 +9,17 @@ import { useNavigate } from 'react-router-dom'
 const Cart:React.FC = () => {
 
   const navigate = useNavigate()
+  const {amount, quantities, addQuantity, decreaseQuantity, cartProducts, removeCart} = useCarrinho()
 
     const navigateCart = () => {
         navigate('/checkout')
+        if(cartProducts.length === 0) {
+            alert('Seu carrinho está vazio, não é possível prossegui com a compra!')
+        }
     }
 
 
-  const {amount, quantities, addQuantity, decreaseQuantity, cartProducts} = useCarrinho()
+ 
   return (
     <div>
         <ImagemApresentacaoPage title="Cart" />
@@ -39,12 +43,12 @@ const Cart:React.FC = () => {
             <img className='h-20 rounded-lg bg-pink_fundo mb-4 md:mb-0 md:mr-8' src={product.images.mainImage} alt="" />
             <div className='flex flex-col md:flex-row items-center w-full md:gap-8 gap-4'>
               <span className='text-sm w-44 text-zinc-500'>{product.title}</span>
-              <span className='text-sm text-zinc-500'>Rs {(product.new ? product.normalPrice : product.salePrice) * (quantities[product.id] || 1)}</span>
+              <span className='text-sm text-zinc-500'>Rs {(product.new ? product.normalPrice : product.salePrice)}</span>
               <div className='border border-zinc-400 rounded-lg flex items-center gap-4 py-1.5 px-2'>
               <button onClick={() => decreaseQuantity(product.id)}>-</button> {quantities[product.id] || 1} <button onClick={() => addQuantity(product.id)}>+</button>
               </div>
-              <span className='text-sm'>Rs {amount.toFixed(2)}</span>
-              <img className='h-4 cursor-pointer' src={trash} alt="logo lixo" />
+              <span className='text-sm'>Rs {((product.new ? product.normalPrice : product.salePrice) * (quantities[product.id] || 1)).toFixed(2)}</span>
+              <img onClick={() => removeCart(product.id)} className='h-4 cursor-pointer' src={trash} alt="logo lixo" />
             </div>
           </li>
         ))

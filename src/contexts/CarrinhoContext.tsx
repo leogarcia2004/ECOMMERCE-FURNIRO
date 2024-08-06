@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from 'react';
 interface PropsCarrinho {
   children: React.ReactNode;
 }
-
 interface ModalContextData {
   carrinhoOpen: boolean;
   setCarrinhoOpen: (open: boolean) => void;
@@ -19,7 +18,7 @@ interface ModalContextData {
   removeCart: (id: number) => void;
 }
 
-  const ModalContext = createContext( {} as ModalContextData );
+const ModalContext = createContext( {} as ModalContextData );
 
 const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
 
@@ -36,7 +35,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
         if (isProductInCart) {
           setQuantities((prevQuantities) => ({
             ...prevQuantities,
-            [id]: prevQuantities[id] + 1,
+            [id]: prevQuantities[id] + 0.5,
           }));
           return prevCartProducts;
         } else {

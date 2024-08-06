@@ -4,6 +4,7 @@ import { validate } from '../../utils/validate'
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from '../../services/firebaseConfig'
 import { User } from '../../types/User'
+import { useNavigate } from 'react-router-dom'
 
 const Register: React.FC = () => { 
 
@@ -12,10 +13,12 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<User | null>(null) 
 
+  const navigate = useNavigate()
+
   const [createUserWithEmailAndPassword, user, loading, error] =
   useCreateUserWithEmailAndPassword(auth);
 
-  function handleSignOut(e) {
+  function handleSignOut(e: FormEvent) {
     e.preventDefault();
     createUserWithEmailAndPassword(email, password);
 
@@ -34,14 +37,18 @@ const Register: React.FC = () => {
     setPassword('') 
   }
 
-if (loading) {
-  return <p>carregando...</p>;
-}
+  if (loading) {
+    return <p>carregando...</p>;
+  }
+
+  const navigateLogin = () => {
+    navigate('/login')
+  }
   
     return (
 
       <div className=' fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center '>
-
+        <i onClick={navigateLogin} className='fas absolute top-8 left-10 fa-arrow-left fa-lg cursor-pointer py-5 px-3 shadow-md bg-white shadow-neutral-400 rounded-full'></i>
         <h1 className=' text-center mb-6 font-bold text-3xl'>Cadastre-se!</h1>
         <form className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
 

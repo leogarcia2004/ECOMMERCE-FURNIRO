@@ -34,21 +34,20 @@ const LoginForm = () => {
     setErrors(null) 
     setEmail('') 
     setPassword('')  
-
-    navigate('/')
   }
 
   if (loading) {
     return <p>carregando...</p>;
   }
-  if (user) {
-    return console.log(user);
+  
+  const navigateHome = () => {
+    navigate('/')
   }
   
     return (
 
-      <div className=' fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center '>
-
+      <div className='fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center'>
+        <i onClick={navigateHome} className='fas absolute top-8 left-10 fa-arrow-left fa-lg cursor-pointer py-5 px-3 shadow-md bg-white shadow-neutral-400 rounded-full'></i>
         <h1 className=' text-center mb-6 font-bold text-3xl'>Faca seu login!</h1>
         <form onSubmit={handleSubmit} className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
 
@@ -70,11 +69,11 @@ const LoginForm = () => {
 
           <div className="flex justify-center gap-1 mb-3 text-xs">
             <p>Você não tem uma conta?</p>
-            <Link to="/register">Crie a sua conta aqui</Link>
+            <Link to="/register" className='hover:underline'>Crie a sua conta aqui</Link>
           </div>
 
             
-          <button type='submit' className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
+          <button onClick={navigateHome} type='submit' className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
       </form>
       </div>
       
