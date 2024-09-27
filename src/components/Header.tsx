@@ -6,7 +6,7 @@ import { useCarrinho } from '../contexts/CarrinhoContext'
 
 const Header = () => {
 
-    const { setCarrinhoOpen }  = useCarrinho();
+    const { setCarrinhoOpen, cartProducts }  = useCarrinho();
 
     const navigate = useNavigate()
 
@@ -17,25 +17,25 @@ const Header = () => {
 
 
   return (
-    <header className='bg-white flex flex-col gap-4 items-center justify-center md:justify-between font-semibold md:items-center md:flex-row py-6 w-full md:h-20 h-fit top-0 sticky z-10'>
+    <header className='bg-white flex flex-col gap-4 items-center justify-center md:justify-between font-semibold md:items-center md:flex-row py-6 w-full md:h-20 h-fit top-0 sticky z-10 shadow-md shadow-neutral-300'>
 
         <img className='pl-10 cursor-pointer' onClick={navigateClick} src={logo} alt="Logo loja" />
 
         <nav>
-            <ul className='flex gap-16 justify-center font-600'>
-                <li className='cursor-pointer'>
+            <ul className='flex gap-16 justify-center'>
+                <li className='cursor-pointer font-semibold'>
                     <Link to={"/"}>Home</Link>
                 </li>
 
-                <li className='cursor-pointer'>
+                <li className='cursor-pointer font-semibold'>
                     <Link to={"/shop"}>Shop</Link>
                 </li>
 
-                <li className='cursor-pointer'>
+                <li className='cursor-pointer font-semibold'>
                     <Link to={"/contact"}>About</Link>
                 </li>
 
-                <li className='cursor-pointer'>
+                <li className='cursor-pointer font-semibold'>
                     <Link to={"/contact"}>Contact</Link>
                 </li>
             </ul>
@@ -47,9 +47,18 @@ const Header = () => {
                         <Link to={"/login"}><i className="fas fa-user fa-lg cursor-pointer"></i></Link>
                     </button>
                 </nav>
-                <button>
-                    <i onClick={() => setCarrinhoOpen(true)} className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
-                </button>
+                    {
+                        cartProducts.length > 0 ? 
+                        <button onClick={() => setCarrinhoOpen(true)} className='relative'>
+                            <div className='rounded-full h-4 w-4 absolute bottom-4 left-3 flex text-xs justify-center items-center text-white bg-red-600'>{cartProducts.length}</div>
+                            <i  className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
+                        </button>
+                        :
+                        <button onClick={() => setCarrinhoOpen(true)}>
+                            <i  className="fas fa-shopping-cart fa-lg cursor-pointer"></i>
+                        </button>
+                    }
+                    
             </div>
     </header>
   )

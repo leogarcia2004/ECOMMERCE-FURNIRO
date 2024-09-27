@@ -34,8 +34,8 @@ const Products:React.FC<productsProps> = ({products}) => {
                   <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} /> 
                 </div>
                 <div className='flex flex-col px-2 gap-1 '>
-                  <span className='font-semibold text-lg'>{product.title}</span>
-                  <span className='text-sm text-zinc-500 overflow-y-auto max-h-16'>{product.description.short}</span>
+                  <span className='font-medium mt-1 text-base'>{product.title}</span>
+                  <span className='text-sm text-zinc-500 overflow-y-auto max-h-14 mb-1'>{product.description.short}</span>
                   <span className='font-semibold text-base'> Rp {product.normalPrice}</span>
                 </div>
               </div>
@@ -69,8 +69,8 @@ const Products:React.FC<productsProps> = ({products}) => {
                 <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} />
               </div>
               <div className='flex flex-col px-2 gap-1 '>
-                <span className='font-semibold text-lg'>{product.title}</span>
-                <span className='text-sm text-zinc-500 overflow-y-auto h-14'>{product.description.short}</span>
+                <span className='font-medium mt-1 text-base'>{product.title}</span>
+                <span className='text-sm text-zinc-500 overflow-y-auto max-h-14 mb-1'>{product.description.short}</span>
                 <div className='flex gap-6'>
                   <span className='font-semibold text-base'> Rp {product.salePrice}</span>
                   <span className=' text-sm text-zinc-500 line-through'> Rp {product.normalPrice}</span>

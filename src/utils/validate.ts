@@ -27,6 +27,14 @@ export const validate = (data: User) => {
         errors["password"] = "A senha deve ter no mínimo 6 caracteres";
     }
 
+    if(!data.confirmPassword) {
+        errors["confirmPassword"] = "A confirmação de senha é obrigatória!";
+    }
+
+    if(data.password !== data.confirmPassword) {
+        errors["confirmPassword"] = "As senhas não coincidem!";
+    }
+
 
     return errors;
 }

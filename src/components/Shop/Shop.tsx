@@ -1,6 +1,6 @@
 import Products from "../Home/Products";
 import ImagemApresentacaoPage from "../ImagemApresentacaoPage";
-import { useEffect, useMemo, useState } from "react";
+import {useMemo, useState } from "react";
 import Informacoes from "../Informacoes";
 import filter from "../../assets/shop/filtering.png";
 import vector from "../../assets/shop/vectorr.png";
@@ -8,24 +8,36 @@ import vector_1 from "../../assets/shop/vectorr_1.png";
 import { useCarrinho } from "../../contexts/CarrinhoContext";
 
 const Shop = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [search, setSearch] = useState(16); 
-  const [localQuery, setLocalQuery] = useState('');
+  const quant = [4, 8, 12, 16];
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [search, setSearch] = useState<number>(16); 
+  const [searchValue, setSearchValue] = useState([]);
+  const [categoria, setCategoria] = useState<string>('');
+  const [openSelect, setOpenSelect] = useState<boolean>(false);
   const PRODUCTS_PER_PAGE = search; 
-  const {products} = useCarrinho()
-
+  const {products} = useCarrinho();
+  
+  const categories = products.map((product) => product.category);
+  const uniqueCategories = Array.from(new Set(categories));
 
   const filterProducts = useMemo(() => {
-    return products.filter((product) => product.category.toLowerCase().includes(localQuery.toLowerCase()));
-  }, [localQuery, products]);
+    if(categoria === 'all') {
+      return products
+    } else {
+      return products.filter((product) =>  product.category.toLowerCase().includes(categoria.toLowerCase()));
+    }
+  }, [categoria, products]);
+
+  const greaterValue = Math.max(...filterProducts.map((product) => product.new ? product.normalPrice : product.salePrice));
+  const lowestValue = Math.min(...filterProducts.map((product) => product.new ? product.normalPrice : product.salePrice));
 
   const getVisibleProducts = () => {
-    const filteredProducts = localQuery ? filterProducts : products;
+    const filteredProducts = categoria ? filterProducts : products;
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
     return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
   };
 
-  const totalPages = Math.ceil((localQuery ? filterProducts.length : products.length) / PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil((categoria ? filterProducts.length : products.length) / PRODUCTS_PER_PAGE);
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -37,7 +49,7 @@ const Shop = () => {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : totalPages));
   };
 
-  const setPage = (pageNum) => {
+  const setPage = (pageNum: number) => {
     if (pageNum > 0 && pageNum <= totalPages) {
       setCurrentPage(pageNum);
     }
@@ -54,15 +66,29 @@ const Shop = () => {
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   };
 
+  const handleCategory = () => {
+    setOpenSelect(!openSelect);
+  };
+
   return (
     <div>
       <ImagemApresentacaoPage title="Shop" />
       <section className='bg-orange-100 md:px-0 px-6 flex flex-wrap justify-around items-center mb-10 md:gap-32 w-full h-36'>
         <div className="flex">
           <ul className="flex items-center gap-6 pr-8">
-            <li className="flex gap-3 items-center font-medium text-lg cursor-pointer">
-              <img className="h-5" src={filter} alt="Logo filter" />
+            <li  className="flex gap-3 items-center font-medium text-lg cursor-pointer">
+              <img onClick={() => handleCategory()} className="h-5" src={filter} alt="Logo filter" />
               Filter
+              {openSelect && (
+                <select onChange={(e) => setCategoria(e.target.value)} className="w-40" name="cateogrias" id="categoria">
+                  <option value='all'>All</option>
+                {uniqueCategories.map((categoria) => (
+                  <option key={categoria} value={categoria}>
+                    {categoria}
+                  </option>
+                ))}
+              </select>
+              )}
             </li>
             <li>
               <img className="cursor-pointer" src={vector} alt="logo vector" />
@@ -76,29 +102,28 @@ const Shop = () => {
         <div className='flex gap-6  font-medium'>
           <div className='flex gap-2'>
             Show
-            <input
-              className='appearance-none w-9 h-8 text-center items-center pl-1 text-zinc-400 focus:outline-none'
-              value={search}
-              min={4}
-              max={16}
-              onChange={(e) => {
-                const value = Math.max(4, Math.min(16, Number(e.target.value))); // Garante que o valor esteja entre 4 e 16
-                setSearch(value);
-              }}
-              type="number"
-              name="number"
-              id="number"
-            />
+            <select onChange={(e) => setSearch(e.target.value)} name="quantidade" id="quantidade">
+              {quant.map((search) => (
+                <option key={search} value={search}>
+                  {search}
+                </option>
+              ))}
+            </select>
           </div>
           <div className='flex gap-2'>
             Short by
-            <input
-            placeholder="Default"
-              value={localQuery}
-              onChange={(e) => setLocalQuery(e.target.value)}
-              className='appearance-none w-20 h-8 text-center text-zinc-400 focus:outline-none'
-              type="text"
-            />
+            <select className="text-sm" onChange={(e) => setSearchValue(e.target.value)} name="" id="">
+              <option value="default">Default</option>
+              <option value={greaterValue}>
+                  Greater value -
+                  Lowest value
+              </option>
+              <option value={lowestValue}>
+                  Lowest value - 
+                  Greater value
+              </option>
+            </select>
+            
           </div>
         </div>
       </section>

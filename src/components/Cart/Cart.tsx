@@ -12,14 +12,7 @@ const Cart:React.FC = () => {
   const {amount, quantities, addQuantity, decreaseQuantity, cartProducts, removeCart} = useCarrinho()
 
     const navigateCart = () => {
-        
-        if(cartProducts.length === 0) {
-            alert('Seu carrinho está vazio, não é possível prosseguir com a compra!')
-            return
-        }
-
-        navigate('/checkout')
-        
+        navigate('/checkout') 
     }
  
   return (
@@ -28,11 +21,11 @@ const Cart:React.FC = () => {
         <section className='my-14 flex flex-col md:flex-row md:gap-8 justify-center w-full'>
   <div className='flex flex-col w-full md:w-6/12'>
     <div className='bg-orange-100 flex justify-center mb-12 py-4'>
-      <ul className='flex flex-col  md:flex-row md:gap-8 gap-4'>
-        <li className='font-semibold'>Product</li>
-        <li className='font-semibold'>Price</li>
-        <li className='font-semibold'>Quantity</li>
-        <li className='font-semibold'>Subtotal</li>
+      <ul className='flex flex-col md:flex-row md:gap-12 gap-4'>
+        <li>Product</li>
+        <li>Price</li>
+        <li>Quantity</li>
+        <li>Subtotal</li>
       </ul>
     </div>
 
@@ -42,14 +35,14 @@ const Cart:React.FC = () => {
         cartProducts.map(product => (
 
           <li className='flex items-center' key={product.id}>
-            <img className='h-20 rounded-lg bg-pink_fundo mb-4 md:mb-0 md:mr-8' src={product.images.mainImage} alt="" />
+            <img className='h-20 rounded-lg bg-pink_fundo mb-4 md:mb-0 md:mr-6' src={product.images.mainImage} alt="" />
             <div className='flex flex-col md:flex-row items-center w-full md:gap-8 gap-4'>
-              <span className='text-sm w-44 text-zinc-500'>{product.title}</span>
-              <span className='text-sm text-zinc-500'>Rs {(product.new ? product.normalPrice : product.salePrice)}</span>
+            <span className='text-sm w-44 text-zinc-500'>{product.title}</span>
+              <span className='text-sm text-zinc-500 w-20'>Rs {(product.new ? product.normalPrice : product.salePrice)}</span>
               <div className='border border-zinc-400 rounded-lg flex items-center gap-4 py-1.5 px-2'>
               <button onClick={() => decreaseQuantity(product.id)}>-</button> {quantities[product.id] || 1} <button onClick={() => addQuantity(product.id)}>+</button>
               </div>
-              <span className='text-sm'>Rs {((product.new ? product.normalPrice : product.salePrice) * (quantities[product.id] || 1)).toFixed(2)}</span>
+              <span className='text-sm w-16'>Rs {((product.new ? product.normalPrice : product.salePrice) * (quantities[product.id] || 1)).toFixed(2)}</span>
               <img onClick={() => removeCart(product.id)} className='h-4 cursor-pointer' src={trash} alt="logo lixo" />
             </div>
           </li>
@@ -61,20 +54,25 @@ const Cart:React.FC = () => {
   </div>
 
   <div className='bg-orange-100 flex flex-col items-center w-full md:w-80 pt-5 pb-14 h-fit'>
-    <h2 className='font-bold text-2xl mb-10'>Cart Totals</h2>
+    <h2 className='font-semibold text-2xl mb-10'>Cart Totals</h2>
 
     <div className='flex flex-col gap-5 mb-8'>
       <div className='flex justify-between gap-6 w-full'>
-        <span className='font-semibold'>Subtotal</span>
+        <span className=''>Subtotal</span>
         <span className='text-sm text-zinc-500'>Rs {amount.toFixed(2)}</span>
       </div>
       <div className='flex justify-between gap-6 w-full'>
-        <span className='font-semibold'>Total</span>
+        <span className=''>Total</span>
         <span className='text-lg font-semibold text-yellow-600'>Rs. {amount.toFixed(2)}</span>
       </div>
     </div>
-
-    <button onClick={navigateCart} className='py-2 px-10 border border-black rounded-xl'>Check out</button>
+    {
+      cartProducts.length === 0
+       ? 
+      <button disabled className='py-2 px-10 border border-black rounded-xl opacity-50 cursor-not-allowed'>Check out</button>
+      :
+      <button onClick={navigateCart} className='py-2 px-10 border border-black rounded-xl'>Check out</button>
+    }
   </div>
 </section>
 

@@ -11,25 +11,25 @@ const ProductSelected:React.FC  = () => {
   const product = location.state?.product;
   const [clickDescription, setClickDescription] = useState<boolean>(true)
   const [seletedImage, setSeletedImage] = useState<string>(product.images.mainImage)
-  const [seletedColor, setSeletedColor] = useState(null)
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [seletedColor, setSeletedColor] = useState<string>('')
+  const [selectedSize, setSelectedSize] = useState<string>('');
 
   const {products, handleBuy, quantities, addQuantity, decreaseQuantity} = useCarrinho()
 
 
-  const handleSizeClick = (size) => {
+  const handleSizeClick = (size: string) => {
     setSelectedSize(size);
   };
 
-  const handleColorClick = (color) => {
+  const handleColorClick = (color: string) => {
     setSeletedColor(color);
   }
 
-  const handleImageClick = (image) => {
-    setSeletedImage(image.target.src)
+  const handleImageClick = (image: string) => {
+    setSeletedImage(image)
   }
 
-  const renderStars = (rating) => {
+  const renderStars = (rating: number) => {
     const totalStars = 5;
     const stars = [];
     for (let i = 1; i <= totalStars; i++) {
@@ -41,6 +41,10 @@ const ProductSelected:React.FC  = () => {
     }
     return stars;
   };
+
+  const warning = () => {
+    alert('Selecione o tamanho e a cor do produto!')
+  }
 
   return (
     <>
@@ -55,28 +59,28 @@ const ProductSelected:React.FC  = () => {
               </section>
               <section className="container flex justify-center md:pl-10 w-full my-10">
                 <div className="flex justify-center md:flex-row flex-col md:gap-6">
-                  <div className='flex  gap-10 w-5/12'>
-                    <div className="flex flex-col gap-5 mt-4">
+                  <div className='flex gap-10 w-5/12'>
+                    <div className="flex md:flex-col gap-5 mt-4">
                       {
-                        product.images.gallery.map((image) => (
+                        product.images.gallery.map((image: string) => (
                           <ul>
                             <li key={image}>
-                              <img src={image} alt="Miniatura móvel" className={"w-24 h-24 bg-orange-100 object-cover cursor-pointer"} onClick={handleImageClick}/>
+                              <img src={image} alt="Miniatura móvel" className={"w-24 h-24 bg-orange-100 object-cover cursor-pointer"} onClick={() => handleImageClick(image)}/>
                             </li>
                           </ul>
                         ))
 
                       }
                     </div>
-                    <img src={seletedImage} alt="Sofá Asgaard" className="w-96 h-[500px] "/>
+                    <img src={seletedImage} alt="Sofá Asgaard" className="md:w-96 md:h-[500px] w-80 h-[400px]"/>
                   </div>
 
                   <div className='flex flex-col w-full md:w-1/2 pl-12'>
-                    <h1 className="text-4xl font-semibold mb-2">{product.title}</h1>
+                    <h1 className="text-4xl  mb-2">{product.title}</h1>
                     <p className="text-gray-400 text-lg font-medium mb-3">Rs. {product.new ? product.normalPrice : product.salePrice}</p>
-                    <div className="flex  text-zinc-400 ">
+                    <div className="text-zinc-400 mb-1.5">
                         {renderStars(product.rating)}
-                        <span className='ml-1.5'>{product.rating} Costumer Review</span>
+                        <span className='ml-2'>{product.rating} Costumer Review</span>
                   </div>
 
                   <p className="text-gray-700 w-full pr-4">
@@ -113,7 +117,7 @@ const ProductSelected:React.FC  = () => {
                             </>                                                                                
 
                               :
-                              product.sizes.map((size) => (
+                              product.sizes.map((size: string) => (
                                 <>
                                   <li key={size}><button  className={`py-2 px-4  rounded-lg text-center ${selectedSize === size ? 'bg-yellow-700 text-white' : 'bg-orange-100 text-black'}`}
                                   onClick={() => handleSizeClick(size)}>{size}</button></li>
@@ -127,7 +131,7 @@ const ProductSelected:React.FC  = () => {
                           <span className="text-zinc-400 font-semibold">Color:</span>
                           <ul className='flex gap-4'>
                             {
-                              product.colors.map((color) => (
+                              product.colors.map((color: string) => (
                                 <li key={color.name}><button className={`p-4 rounded-full ${seletedColor === color ? 'border border-black' : 'border-none'}`} style={{backgroundColor: color.hex}} onClick={() => handleColorClick(color)}></button></li>
                               ))
                             }
@@ -139,15 +143,24 @@ const ProductSelected:React.FC  = () => {
                       <div className='border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-2'>
                       <button onClick={() => decreaseQuantity(product.id)}>-</button> {quantities[product.id] || 1} <button onClick={() => addQuantity(product.id)}>+</button>
                       </div>
-                      <button onClick={() => handleBuy(product.id)} className="border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-3.5">
-                        Add To Cart
-                      </button>
+                      {
+                         seletedColor !== '' && selectedSize !== '' && seletedColor !== ''
+                        ? 
+                        <button onClick={() => handleBuy(product.id)} className="border border-zinc-400 rounded-lg flex items-center gap-4 py-2 px-3.5">
+                          Add To Cart
+                        </button>
+                        :
+                        <button onClick={() => warning()} className="border border-zinc-400 rounded-lg flex cursor-not-allowed items-center gap-4 py-2 px-3.5">
+                          Add To Cart
+                        </button>
+                      }
+                      
                     </div>
 
                     <div className="mt-4 flex w-full border-t pt-10 border-zinc-300 flex-col gap-3 text-zinc-400">
                       <p>SKU   : {product.sku}</p>
                       <p>Category   : {product.category}</p>
-                      <p>Tags   : {product.tags.map((tag) => tag)}</p>
+                      <p>Tags   : {product.tags.map((tag: string) => tag)}</p>
                       <span className='flex items-center gap-3'>Share   : 
                         <ul className='flex gap-3'>
                           <li><i className='fab fa-facebook text-black'></i></li>
@@ -182,7 +195,7 @@ const ProductSelected:React.FC  = () => {
               </div>
               <div className='flex md:flex-row flex-col items-center justify-center mt-8 gap-20'>
                 {
-                  product.images.gallery.slice(0,2).map((image) => (
+                  product.images.gallery.slice(0,2).map((image: string) => (
                     <img className='bg-pink_fundo h-72 w-96' src={image} alt="Imagem móvel" />
                   ))
                 }

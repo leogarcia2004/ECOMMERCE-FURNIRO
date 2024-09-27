@@ -7,6 +7,7 @@ import { FormEvent } from 'react'
 import { useState } from 'react'
 import { ValidateCheckout } from '../../utils/ValidateCheckout'
 import { UserCheckout } from '../../types/User'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout:React.FC = () => {
 
@@ -23,6 +24,8 @@ const Checkout:React.FC = () => {
     const [message, setMessage] = useState<string>('')
     const [errors, setErrors] = useState<UserCheckout | null>(null) 
     const [clicked, setClicked] = useState<string>('')
+
+    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
 
@@ -46,7 +49,9 @@ const Checkout:React.FC = () => {
         if(Object.keys(validadeErros).length > 0) {
             setErrors(validadeErros) 
             return
-        }       
+        }    
+        
+        navigate('/home')
     }
 
     const {quantities, amount, cartProducts} = useCarrinho()
@@ -68,7 +73,7 @@ const Checkout:React.FC = () => {
                     <div className='flex gap-7'>
                         <div className='flex flex-col gap-3'>
                             <label className='font-semibold' htmlFor='firstname'>First Name</label>
-                            <input value={firstName} onChange={(e) => setFirstName(e.target.value)}  className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' required type='text'  id='firstname' />
+                            <input value={firstName} onChange={(e) => setFirstName(e.target.value)}  className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' type='text'  id='firstname' />
                             {errors?.firstName && (
                                 <small className="text-xs text-red-500 mt-1">{errors?.firstName}</small>
                             )}
@@ -76,7 +81,7 @@ const Checkout:React.FC = () => {
 
                         <div className='flex flex-col gap-3'>
                             <label className='font-semibold' htmlFor='lastname'>Last Name</label>
-                            <input value={lastName} onChange={(e) => setLastName(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' required type='text' id='lastname' />
+                            <input value={lastName} onChange={(e) => setLastName(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 w-40 h-16' type='text' id='lastname' />
                             {errors?.lastName && (
                                 <small className="text-xs text-red-500 mt-1">{errors?.lastName}</small>
                             )}
@@ -89,55 +94,55 @@ const Checkout:React.FC = () => {
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='zipcode'>ZIP code</label>
-                        <input value={zipCode} onChange={(e) => setZipcode(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='zipcode' />
+                        <input value={zipCode} onChange={(e) => setZipcode(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='zipcode' />
                         {errors?.zipCode && (
                             <small className="text-xs text-red-500 mt-1">{errors?.zipCode}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='countryeregion'>Country / Region</label>
-                        <input value={country} onChange={(e) => setCountry(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='countryeregion' />
+                        <input value={country} onChange={(e) => setCountry(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='countryeregion' />
                         {errors?.country && (
                             <small className="text-xs text-red-500 mt-1">{errors?.country}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
-                        <label className='font-semibold' htmlFor='address'>Street address</label>
-                        <input value={street} onChange={(e) => setStreet(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='address' />
+                        <label className='font-semibold' htmlFor='street'>Street address</label>
+                        <input value={street} onChange={(e) => setStreet(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='street' />
                         {errors?.street && (
                             <small className="text-xs text-red-500 mt-1">{errors?.street}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='townecity'>Town / City</label>
-                        <input value={city} onChange={(e) =>  setCity(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='townecity' />
+                        <input value={city} onChange={(e) =>  setCity(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='townecity' />
                         {errors?.city && (
                             <small className="text-xs text-red-500 mt-1">{errors?.city}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='province'>Province</label>
-                        <input value={province} onChange={(e) => setProvince(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='province' />
+                        <input value={province} onChange={(e) => setProvince(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='province' />
                         {errors?.province && (
                             <small className="text-xs text-red-500 mt-1">{errors?.province}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold' htmlFor='addaddress'>Add-on address</label>
-                        <input value={onAdress} onChange={(e) => setOnAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='addaddress' />
+                        <input value={onAdress} onChange={(e) => setOnAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='addaddress' />
                         {errors?.onAdress && (
                             <small className="text-xs text-red-500 mt-1">{errors?.onAdress}</small>
                         )}
                     </div>
                     <div className='flex flex-col gap-3'>
-                    <label className='font-semibold' htmlFor='addaddress'>Email address</label>
-                        <input value={emailAdress} onChange={(e) => setEmailAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required type='text' id='address' />
+                    <label className='font-semibold' htmlFor='address'>Email address</label>
+                        <input value={emailAdress} onChange={(e) => setEmailAdress(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' type='text' id='address' />
                         {errors?.emailAdress && (
                             <small className="text-xs text-red-500 mt-1">{errors?.emailAdress}</small>
                         )}
                     </div>
                     <div>
-                        <input value={message} onChange={(e) => setMessage(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' required placeholder='Digite uma mensagem aqui...' type='text' id='lastname' />
+                        <input value={message} onChange={(e) => setMessage(e.target.value)} className='appearance-none pl-3 text-zinc-500 focus:outline-none border rounded-lg border-neutral-700 h-16 w-full' placeholder='Digite uma mensagem aqui...' type='text' id='lastname' />
                     </div>
                 </div>
 
@@ -169,22 +174,23 @@ const Checkout:React.FC = () => {
                         </div>
                     </div>
 
-                    <div className='pt-7 flex items-center flex-col gap-7'>
+                    <div className='pt-7 flex items-center flex-col gap-4'>
                         <div className='flex flex-col gap-3 items-start'>
-                            <div className='flex items-center required gap-2 '>
+                            <div className='flex items-center gap-2 '>
                                 <input onClick={() => handleClick('bank')} className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="bank"/>
                                 <label htmlFor="bank">Direct Bank Transfer</label>
                             </div>
                             <p className={ clicked === 'bank' ? 'text-zinc-400 text-justify' : 'text-black text-justify'}>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                         </div>
 
-                        <div className='flex flex-col gap-4 items-start'>
-                            <div className='flex items-center required gap-2 '>
+                        <div className=' w-full flex justify-start flex-col gap-4 '>
+                            <div className='flex items-center gap-2 '>
                                 <input onClick={() => handleClick('cash')} className='focus:font-medium appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-black checked:border-transparent focus:outline-none' type="radio" name="buy" id="cash" />
                                 <label  htmlFor="cash">Cash On Delivery</label>
                             </div>
-                            <p className={ clicked === 'cash' ? 'text-zinc-400 text-justify' : 'text-black text-justify'}>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <strong className='text-black'>privacy policy</strong>.</p>
+                            
                         </div>
+                        <p className='text-black mt-2 text-justify'>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <strong className='text-black'>privacy policy</strong>.</p>
 
                         <button type='submit' className='w-fit md:py-3 py-2 md:px-24 px-12 mt-2 border border-black rounded-xl font-medium text-neutral-900'>Place order</button>
                     </div>

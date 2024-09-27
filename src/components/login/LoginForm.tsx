@@ -1,11 +1,12 @@
 
 import{ useState, FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { validate } from '../../utils/validate'
 import { User } from '../../types/User'
 import { auth } from '../../services/firebaseConfig'
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useNavigate } from 'react-router-dom'
+import logoFurniro from '../../assets/logo_furniro.png'
 
 const LoginForm = () => { 
 
@@ -16,6 +17,8 @@ const LoginForm = () => {
   const [signInWithEmailAndPassword, user, loading] = useSignInWithEmailAndPassword(auth);
 
   const navigate = useNavigate()
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
   const handleSubmit = (e: FormEvent) => {
 
@@ -40,17 +43,25 @@ const LoginForm = () => {
     return <p>carregando...</p>;
   }
   
-  const navigateHome = () => {
-    navigate('/')
-  }
-  
+  const navigateLastPage = () => {
+    if (from === '/register') {
+      navigate('/');
+    } else {
+      navigate(from, { replace: true });
+    }
+  };
     return (
 
-      <div className='fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 m-auto flex flex-col justify-center items-center'>
-        <i onClick={navigateHome} className='fas absolute top-8 left-10 fa-arrow-left fa-lg cursor-pointer py-5 px-3 shadow-md bg-white shadow-neutral-400 rounded-full'></i>
-        <h1 className=' text-center mb-6 font-bold text-3xl'>Faca seu login!</h1>
-        <form onSubmit={handleSubmit} className='bg-white py-8 w-96 px-8 flex flex-col border-zinc-600 border '>
+      <div className='fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 flex flex-col  items-center'>
+        <i onClick={navigateLastPage} className='fas absolute top-8 left-10 fa-arrow-left fa-lg cursor-pointer py-5 px-3 shadow-md bg-white shadow-neutral-400 rounded-full'></i>
 
+        <div className='flex flex-col items-center mb-5'>
+            <img src={logoFurniro} alt="Logo furniro" className='mb-[-20px]' />
+            <h1 className='text-2xl font-bold'>Furniro</h1>
+          </div>
+
+        <form onSubmit={handleSubmit} className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
+          <h1 className=' text-center mb-6 font-bold text-3xl'>Faça seu login!</h1>
           <div className='flex flex-col mb-3 gap-1.5'>
             <label htmlFor="email">Email</label>
             <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none py-1 pl-1.5 border border-zinc-500 rounded-sm' />
@@ -73,7 +84,7 @@ const LoginForm = () => {
           </div>
 
             
-          <button onClick={navigateHome} type='submit' className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm font-semibold border-none'>Submit</button>
+          <button onClick={navigateLastPage} type='submit' className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Submit</button>
       </form>
       </div>
       

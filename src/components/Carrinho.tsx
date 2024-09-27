@@ -14,10 +14,12 @@ const Carrinho: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateCart = () => {
+    if(cartProducts.length === 0) return
     navigate('/cart')
   }
 
   const navigateCheckout = () => {
+    if(cartProducts.length === 0) return
     navigate('/checkout')
   }
 
@@ -34,11 +36,11 @@ const Carrinho: React.FC = () => {
           <div className='h-3/5 w-full overflow-y-auto flex flex-col gap-2'>
           { clicked ?
           cartProducts.map(product => ( 
-              <div key={product.id} className='flex items-center w-full justify-between p-1.5 px-6 rounded-lg'>
-                <img src={product.images.mainImage} alt="" className='h-20 mr-2 bg-pink_fundo rounded-md' />
+              <div key={product.id} className='flex items-center  w-full p-1.5 px-6 rounded-lg'>
+                <img src={product.images.mainImage} alt="" className='h-20 mr-2  bg-pink_fundo rounded-md' />
 
-                <div className='flex flex-col justify-center gap-2 '>
-                  <h3 className='text-neutral-900 '> {product.title} </h3>
+                <div className='flex flex-col justify-center mr-10 gap-1.5 '>
+                  <h3 className='text-neutral-900 text-sm '> {product.title} </h3>
                   <p className='text-sm'><span className='text-base'>{quantities[product.id] || 1}</span> X <span className='text-yellow-600 text-sm'>{ product.new ? product.normalPrice : product.salePrice}</span></p>
                 </div>
 
@@ -54,8 +56,8 @@ const Carrinho: React.FC = () => {
           <span className='w-full flex gap-36 pl-5 rounded-sm'>Subtotal <span className='text-yellow-600 font-medium'>{amount.toFixed(2)}</span> </span>
            
           <div className='flex text-sm gap-4'>
-            <button onClick={navigateCart} className='w-fit py-1 px-7 border border-black rounded-2xl text-neutral-900'>Cart</button>
-            <button onClick={navigateCheckout} className='w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900'>Checkout</button>
+            <button onClick={navigateCart} className={`w-fit py-1 px-7 border border-black rounded-2xl text-neutral-900 ${cartProducts.length === 0 ? 'cursor-not-allowed' : ''}`}>Cart</button>
+            <button onClick={navigateCheckout} className={`w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900 ${cartProducts.length === 0 ? 'cursor-not-allowed' : ''}`}>Checkout</button>
             <button className='w-fit py-1 px-6 border border-black rounded-2xl text-neutral-900'>Comparison</button>
           </div>
         </div>

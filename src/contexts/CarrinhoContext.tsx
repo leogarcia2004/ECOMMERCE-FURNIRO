@@ -87,11 +87,6 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
     });
   }
 
-
-  // const sameProduct = (id: number) => {
-
-  // }
-
   const getProducts = () => {
     const productsFunc = async () => {
 

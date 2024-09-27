@@ -38,7 +38,7 @@ const RelatedProducts:React.FC<relatedProps> = ({products, category}) => {
                     <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} /> 
                   </div>
                   <div className='flex flex-col px-2 gap-1 '>
-                    <span className='font-semibold text-lg'>{product.title}</span>
+                    <span className='mt-1.5 text-lg'>{product.title}</span>
                     <span className='text-sm text-zinc-500 overflow-y-auto max-h-16'>{product.description.short}</span>
                     <span className='font-semibold text-base'> Rp {product.normalPrice}</span>
                   </div>
@@ -74,7 +74,7 @@ const RelatedProducts:React.FC<relatedProps> = ({products, category}) => {
                   <img className='h-40 w-full' src={product.images.mainImage} alt={product.images.mainImage} />
                 </div>
                 <div className='flex flex-col px-2 gap-1 '>
-                  <span className='font-semibold text-lg'>{product.title}</span>
+                  <span className='mt-1.5 text-lg'>{product.title}</span>
                   <span className='text-sm text-zinc-500 overflow-y-auto h-14'>{product.description.short}</span>
                   <div className='flex gap-6'>
                     <span className='font-semibold text-base'> Rp {product.salePrice}</span>

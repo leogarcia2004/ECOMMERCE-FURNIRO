@@ -42,7 +42,7 @@ const HomePage = () => {
      <div className='bg-orange-100 md:w-5/12 h-fit pl-5 pt-10 pb-6 '>
         <span className='font-semibold mb-6'>new arrival</span>
         <h1 className='text-4xl font-bold text-amber-600 mb-6'>Discover Our <br /> New Collection</h1>
-        <p className='font-semibold mb-10'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem omnis iure corporis, ratione ipsum laborum.</p>
+        <p className='font-medium mb-10'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem omnis iure corporis, ratione ipsum laborum.</p>
         <button onClick={navigateClick} className='bg-amber-600 text-white px-14 py-4 font-semibold'>Buy now</button>
      </div>
      </section>

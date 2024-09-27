@@ -11,6 +11,7 @@ import Carrinho from './components/Carrinho.tsx'
 import CarrinhoContext from './contexts/CarrinhoContext.tsx'
 import LoginForm from './components/login/LoginForm.tsx'
 import Register from './components/register/Register.tsx'
+import PageThank from './components/PageThank.tsx'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/contact" element={<Contact /> } />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/thank" element={<PageThank />} />
         </Routes>
         <Footer />
       </CarrinhoContext>
