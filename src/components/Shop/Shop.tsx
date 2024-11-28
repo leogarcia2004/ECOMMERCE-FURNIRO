@@ -7,6 +7,7 @@ import vector from "../../assets/shop/vectorr.png";
 import vector_1 from "../../assets/shop/vectorr_1.png";
 import { useCarrinho } from "../../contexts/CarrinhoContext";
 
+
 const Shop = () => {
   const quant = [4, 8, 12, 16];
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -16,6 +17,7 @@ const Shop = () => {
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const PRODUCTS_PER_PAGE = search; 
   const {products} = useCarrinho();
+
   
   const categories = products.map((product) => product.category);
   const uniqueCategories = Array.from(new Set(categories));

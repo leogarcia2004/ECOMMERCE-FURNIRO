@@ -1,7 +1,8 @@
 import { createContext } from 'react';
 import { IProduct } from '../components/PropsProduct';
 import { useState, useEffect, useContext } from 'react';
-
+import { getAuth } from "firebase/auth";
+import { User } from '../types/User';
 interface PropsCarrinho {
   children: React.ReactNode;
 }
@@ -16,6 +17,7 @@ interface ModalContextData {
   addQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeCart: (id: number) => void;
+  user: User;
 }
 
 const ModalContext = createContext( {} as ModalContextData );
@@ -26,27 +28,34 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [products, setProducts] = useState([])
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const handleBuy = (id: number) => {
-    const product = products.find((product) => product.id === id);
-    if (product) {
-      setCartProducts((prevCartProducts) => {
-        const isProductInCart = prevCartProducts.some((cartProduct) => cartProduct.id === id);
-        if (isProductInCart) {
-          setQuantities((prevQuantities) => ({
-            ...prevQuantities,
-            [id]: prevQuantities[id] + 0.5,
-          }));
-          return prevCartProducts;
-        } else {
-          setQuantities((prevQuantities) => ({
-            ...prevQuantities,
-            [id]: 1,
-          }));
-          return [...prevCartProducts, product];
-        }
-      });
+    if(user){
+      const product = products.find((product) => product.id === id);
+      if (product) {
+        setCartProducts((prevCartProducts) => {
+          const isProductInCart = prevCartProducts.some((cartProduct) => cartProduct.id === id);
+          if (isProductInCart) {
+            setQuantities((prevQuantities) => ({
+              ...prevQuantities,
+              [id]: prevQuantities[id] + 0.5,
+            }));
+            return prevCartProducts;
+          } else {
+            setQuantities((prevQuantities) => ({
+              ...prevQuantities,
+              [id]: 1,
+            }));
+            return [...prevCartProducts, product];
+          }
+        });
+      }
+    } else {
+      alert('Você precisa estar logado para efetuar a compra!')
     }
+    
   };
   
   const amount = cartProducts.reduce((acc, product) => {
@@ -56,17 +65,26 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   }, 0)
 
   const addQuantity = (id: number) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: (prevQuantities[id] || 1) + 1,
-    }));
+    if(user){
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [id]: (prevQuantities[id] || 1) + 1,
+      }));
+    } else {
+      alert('Você precisa estar logado para efetuar a compra!')
+    }
+
   };
 
   const decreaseQuantity = (id: number) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: Math.max((prevQuantities[id] || 1) - 1, 1),
-    }));
+    if(user){
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [id]: Math.max((prevQuantities[id] || 1) - 1, 1),
+      }));
+    } else {
+      alert('Você precisa estar logado para efetuar a compra!')
+    }
   };
 
   const removeCart = (id: number) => {
@@ -105,7 +123,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart, user}}>
         {children}
       </ModalContext.Provider>
     </div>

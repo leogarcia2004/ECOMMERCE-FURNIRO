@@ -27,6 +27,7 @@ const Checkout:React.FC = () => {
 
     const navigate = useNavigate()
 
+
     const handleSubmit = (e: FormEvent) => {
 
         e.preventDefault()
@@ -54,7 +55,11 @@ const Checkout:React.FC = () => {
         navigate('/home')
     }
 
-    const {quantities, amount, cartProducts} = useCarrinho()
+    const {quantities, amount, cartProducts, user} = useCarrinho()
+
+    if(!user) {
+        navigate('/')
+    }
 
     const handleClick = (id: string) => {
         setClicked(id)
