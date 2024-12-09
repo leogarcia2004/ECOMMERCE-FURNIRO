@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AmostraFotos from "../../assets/home/Images.png";
-import CarrosselProducts from "./CarrosselProducts";
+import CarrosselProducts from "./CarouselProducts";
 import Products from "./Products";
 import BotaoShowMore from "../ButtonShowMore";
 import { useNavigate } from "react-router-dom";

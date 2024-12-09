@@ -1,5 +1,5 @@
 import Products from "../Home/Products";
-import ImagemApresentacaoPage from "../ImagemApresentacaoPage";
+import ImagemApresentacaoPage from "../ApresentationImagePage";
 import { useMemo, useState } from "react";
 import Informacoes from "../Informations";
 import filter from "../../assets/shop/filtering.png";

@@ -1,4 +1,4 @@
-import ImagemApresentacaoPage from "../ImagemApresentacaoPage";
+import ImagemApresentacaoPage from "../ApresentationImagePage";
 import Informacoes from "../Informations";
 import trash from "../../assets/cart/trash.png";
 import { useCarrinho } from "../../contexts/CartContext";

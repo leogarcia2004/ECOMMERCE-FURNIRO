@@ -1,5 +1,5 @@
 import { useCarrinho } from "../../contexts/CartContext";
-import ImagemApresentacaoPage from "../ImagemApresentacaoPage";
+import ImagemApresentacaoPage from "../ApresentationImagePage";
 import Informacoes from "../Informations";
 import { FormEvent } from "react";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import ImagemApresentacaoPage from "../ImagemApresentacaoPage";
+import ImagemApresentacaoPage from "../ApresentationImagePage";
 import Informacoes from "../Informations";
 import { validateContact } from "../../utils/validateContact";
 import { UserContact } from "../../types/User";
