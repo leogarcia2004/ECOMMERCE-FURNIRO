@@ -8,10 +8,10 @@ import vector_1 from "../../assets/shop/vectorr_1.png";
 import { useCarrinho } from "../../contexts/CartContext";
 
 const Shop = () => {
-  const quant = [4, 8, 12, 16];
+  const quant = [8, 12, 16];
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [search, setSearch] = useState<number>(16);
-  const [searchValue, setSearchValue] = useState([]);
+  const [search, setSearch] = useState<number>(quant[0]);
+  const [searchValue, setSearchValue] = useState<number>(0);
   const [categoria, setCategoria] = useState<string>("");
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const PRODUCTS_PER_PAGE = search;
@@ -130,11 +130,11 @@ const Shop = () => {
             Showing 1–{search} of {products.length + 1} results
           </span>
         </div>
-        <div className="flex gap-6  font-medium">
+        <div className="flex gap-6 font-medium">
           <div className="flex gap-2">
             Show
             <select
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(Number(e.target.value))}
               name="quantidade"
               id="quantidade"
             >
@@ -149,7 +149,7 @@ const Shop = () => {
             Short by
             <select
               className="text-sm"
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={(e) => setSearchValue(Number(e.target.value))}
               name=""
               id=""
             >
