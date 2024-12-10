@@ -35,6 +35,5 @@ export const validate = (data: User) => {
         errors["confirmPassword"] = "As senhas não coincidem!";
     }
 
-
     return errors;
 }

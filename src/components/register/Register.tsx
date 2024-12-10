@@ -17,7 +17,7 @@ const Register: React.FC = () => {
 
   const navigate = useNavigate()
 
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, loading] =
   useCreateUserWithEmailAndPassword(auth);
 
   function handleSignOut(e: FormEvent) {
@@ -37,6 +37,9 @@ const Register: React.FC = () => {
     setName('') 
     setEmail('') 
     setPassword('') 
+
+    // Verificar se não existe nenhum email existente
+    
   }
 
   if (loading) {
