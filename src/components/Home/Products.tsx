@@ -25,9 +25,9 @@ const Products: React.FC<productsProps> = ({ products }) => {
           <div
             onClick={() => handleBuyRelated(product)}
             className="card-father cursor-pointer"
+            key={product.id}
           >
-            <div
-              key={product.id}
+            <div         
               className="bg-slate-200 flex w-52 h-90 flex-col card-product"
             >
               <div className="w-full relative">
@@ -83,9 +83,9 @@ const Products: React.FC<productsProps> = ({ products }) => {
           <div
             onClick={() => handleBuyRelated(product)}
             className="card-father cursor-pointer"
+            key={product.id}
           >
-            <div
-              key={product.id}
+            <div             
               className="bg-slate-200 flex w-52 h-90 flex-col card-product"
             >
               <div className="w-full relative">

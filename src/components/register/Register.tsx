@@ -14,7 +14,6 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errors, setErrors] = useState<User | null>(null) 
-
   const navigate = useNavigate()
 
   const [createUserWithEmailAndPassword, loading] =
@@ -25,9 +24,7 @@ const Register: React.FC = () => {
     createUserWithEmailAndPassword(email, password);
 
     const data: User = { name, email, password, confirmPassword: password } 
-
     const validadeErros = validate(data) 
-
     if(Object.keys(validadeErros).length > 0) {
       setErrors(validadeErros) 
       return
@@ -36,10 +33,9 @@ const Register: React.FC = () => {
     setErrors(null) 
     setName('') 
     setEmail('') 
-    setPassword('') 
-
-    // Verificar se não existe nenhum email existente
-    
+    setPassword('')  
+    setConfirmPassword('')
+    navigate('/login') 
   }
 
   if (loading) {

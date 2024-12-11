@@ -3,32 +3,27 @@ import{ useState, FormEvent } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { validate } from '../../utils/validate'
 import { User } from '../../types/User'
-import { auth } from '../../services/firebaseConfig'
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useNavigate } from 'react-router-dom'
 import logoFurniro from '../../assets/logo_furniro.png'
+import { useCarrinho } from '../../contexts/CartContext'
 
 const LoginForm = () => { 
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<User | null>(null) 
-
-  const [signInWithEmailAndPassword, user, loading] = useSignInWithEmailAndPassword(auth);
-
+  const { user, signInWithEmailAndPassword, loading } = useCarrinho()
   const navigate = useNavigate()
   const location = useLocation();
   const from = location.state?.from || '/';
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSignIn = (e: FormEvent) => {
 
     e.preventDefault() 
     signInWithEmailAndPassword(email, password);
 
     const data: User = { email, password } 
-
     const validadeErros = validate(data) 
-
     if(Object.keys(validadeErros).length > 0) {
       setErrors(validadeErros) 
       return
@@ -39,10 +34,14 @@ const LoginForm = () => {
     setPassword('')  
   }
 
+  if(user){
+    navigate('/');
+  }
+
   if (loading) {
     return <p>carregando...</p>;
   }
-  
+
   const navigateLastPage = () => {
     if (from === '/register') {
       navigate('/');
@@ -60,7 +59,7 @@ const LoginForm = () => {
             <h1 className='text-2xl font-bold'>Furniro</h1>
           </div>
 
-        <form onSubmit={handleSubmit} className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
+        <form className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
           <h1 className=' text-center mb-6 font-bold text-3xl'>Faça seu login!</h1>
           <div className='flex flex-col mb-3 gap-1.5'>
             <label htmlFor="email">Email</label>
@@ -83,8 +82,7 @@ const LoginForm = () => {
             <Link to="/register" className='hover:underline'>Crie a sua conta aqui</Link>
           </div>
 
-            
-          <button onClick={navigateLastPage} type='submit' className=' p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Submit</button>
+          <button onClick={handleSignIn} className='p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Submit</button>
       </form>
       </div>
       

@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 import { IProduct } from '../components/PropsProduct';
 import { useState, useEffect, useContext } from 'react';
-import { getAuth } from "firebase/auth";
-import { User } from '../types/User';
+import { auth } from '../services/firebaseConfig'
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 interface PropsCarrinho {
   children: React.ReactNode;
 }
@@ -18,6 +18,8 @@ interface ModalContextData {
   decreaseQuantity: (id: number) => void;
   removeCart: (id: number) => void;
   user: User;
+  signInWithEmailAndPassword: (email: string, password: string) => void;
+  loading: boolean;
 }
 
 const ModalContext = createContext( {} as ModalContextData );
@@ -28,11 +30,10 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [products, setProducts] = useState([])
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const [signInWithEmailAndPassword, user, loading] = useSignInWithEmailAndPassword(auth);
 
   const handleBuy = (id: number) => {
-    if(user){
+    if(user && user.user){
       const product = products.find((product) => product.id === id);
       if (product) {
         setCartProducts((prevCartProducts) => {
@@ -123,7 +124,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart, user}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart, user, signInWithEmailAndPassword, loading}}>
         {children}
       </ModalContext.Provider>
     </div>
