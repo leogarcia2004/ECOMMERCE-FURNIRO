@@ -3,6 +3,7 @@ import Informacoes from "../Informations";
 import trash from "../../assets/cart/trash.png";
 import { useCarrinho } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/auth/AuthProvider";
 
 const Cart: React.FC = () => {
   const navigate = useNavigate();
@@ -14,10 +15,15 @@ const Cart: React.FC = () => {
     cartProducts,
     removeCart,
   } = useCarrinho();
+  const { user } = useAuthContext();
 
   const navigateCart = () => {
     navigate("/checkout");
   };
+
+  if(!user){
+    navigate('/')
+  }
 
   return (
     <div>

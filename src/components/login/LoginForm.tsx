@@ -5,14 +5,13 @@ import { validate } from '../../utils/validate'
 import { User } from '../../types/User'
 import { useNavigate } from 'react-router-dom'
 import logoFurniro from '../../assets/logo_furniro.png'
-import { useCarrinho } from '../../contexts/CartContext'
-
+import { useAuthContext } from '../../contexts/auth/AuthProvider'
 const LoginForm = () => { 
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<User | null>(null) 
-  const { user, signInWithEmailAndPassword, loading } = useCarrinho()
+  const { user, signInWithEmailAndPassword, loading, handleLogOut } = useAuthContext()
   const navigate = useNavigate()
   const location = useLocation();
   const from = location.state?.from || '/';
@@ -49,6 +48,7 @@ const LoginForm = () => {
       navigate(from, { replace: true });
     }
   };
+
     return (
 
       <div className='fixed top-0 right-0 z-50 bg-white h-screen w-full py-16 flex flex-col  items-center'>
@@ -57,33 +57,41 @@ const LoginForm = () => {
         <div className='flex flex-col items-center mb-5'>
             <img src={logoFurniro} alt="Logo furniro" className='mb-[-20px]' />
             <h1 className='text-2xl font-bold'>Furniro</h1>
-          </div>
+        </div>
+        {user ? (
+          <div className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
+            <h1 className=' text-center mb-6 font-bold text-3xl'>Deseja se desconectar?</h1>
 
-        <form className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
-          <h1 className=' text-center mb-6 font-bold text-3xl'>Faça seu login!</h1>
-          <div className='flex flex-col mb-3 gap-1.5'>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none py-1 pl-1.5 border border-zinc-500 rounded-sm' />
-            {errors?.email && (
-              <small className="text-xs text-red-500 mt-1">{errors?.email}</small>
-            )}
-          </div>
+            <button onClick={handleLogOut} className='p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Log out</button>
+        </div>
 
-          <div className='flex flex-col mb-3 gap-1.5'>
-            <label htmlFor="password">Senha</label>
-            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className='focus:outline-none py-1 pl-1.5  border border-zinc-500 rounded-sm' />
-            {errors?.password && (
-              <small className="text-xs text-red-500 mt-1">{errors?.password}</small>
-            )}
-          </div>
+        ): (
+          <form className='bg-white pb-8 pt-5 w-96 px-8  flex flex-col border-zinc-600 border '>
+            <h1 className=' text-center mb-6 font-bold text-3xl'>Faça seu login!</h1>
+            <div className='flex flex-col mb-3 gap-1.5'>
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className='focus:outline-none py-1 pl-1.5 border border-zinc-500 rounded-sm' />
+              {errors?.email && (
+                <small className="text-xs text-red-500 mt-1">{errors?.email}</small>
+              )}
+            </div>
 
-          <div className="flex justify-center gap-1 mb-3 text-xs">
-            <p>Você não tem uma conta?</p>
-            <Link to="/register" className='hover:underline'>Crie a sua conta aqui</Link>
-          </div>
+            <div className='flex flex-col mb-3 gap-1.5'>
+              <label htmlFor="password">Senha</label>
+              <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className='focus:outline-none py-1 pl-1.5  border border-zinc-500 rounded-sm' />
+              {errors?.password && (
+                <small className="text-xs text-red-500 mt-1">{errors?.password}</small>
+              )}
+            </div>
 
-          <button onClick={handleSignIn} className='p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Submit</button>
-      </form>
+            <div className="flex justify-center gap-1 mb-3 text-xs">
+              <p>Você não tem uma conta?</p>
+              <Link to="/register" className='hover:underline'>Crie a sua conta aqui</Link>
+            </div>
+
+            <button onClick={handleSignIn} className='p-2 bg-yellow-600 hover:bg-yellow-700 text-white border rounded-sm  border-none'>Submit</button>
+        </form>
+        )}        
       </div>
       
     )

@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo_header.png";
 import { useNavigate } from "react-router-dom";
 import { useCarrinho } from "../contexts/CartContext";
+import { useAuthContext } from "../contexts/auth/AuthProvider";
 
 const Header = () => {
-  const { setCarrinhoOpen, cartProducts, user } = useCarrinho();
+  const { setCarrinhoOpen, cartProducts} = useCarrinho();
+  const { user } = useAuthContext();
 
   const navigate = useNavigate();
 

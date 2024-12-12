@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ValidateCheckout } from "../../utils/ValidateCheckout";
 import { UserCheckout } from "../../types/User";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/auth/AuthProvider";
 
 const Checkout: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -60,7 +61,8 @@ const Checkout: React.FC = () => {
     navigate("/home");
   };
 
-  const { quantities, amount, cartProducts, user } = useCarrinho();
+  const { quantities, amount, cartProducts } = useCarrinho();
+  const { user } = useAuthContext();
 
   if (!user) {
     navigate("/");

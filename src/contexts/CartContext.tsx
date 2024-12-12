@@ -1,8 +1,7 @@
 import { createContext } from 'react';
 import { IProduct } from '../components/PropsProduct';
 import { useState, useEffect, useContext } from 'react';
-import { auth } from '../services/firebaseConfig'
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useAuthContext } from './auth/AuthProvider';
 interface PropsCarrinho {
   children: React.ReactNode;
 }
@@ -17,9 +16,6 @@ interface ModalContextData {
   addQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeCart: (id: number) => void;
-  user: User;
-  signInWithEmailAndPassword: (email: string, password: string) => void;
-  loading: boolean;
 }
 
 const ModalContext = createContext( {} as ModalContextData );
@@ -27,13 +23,13 @@ const ModalContext = createContext( {} as ModalContextData );
 const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
 
   const [carrinhoOpen, setCarrinhoOpen] = useState<boolean>(false);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<IProduct[]>([])
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-  const [signInWithEmailAndPassword, user, loading] = useSignInWithEmailAndPassword(auth);
+  const {user} = useAuthContext();
 
   const handleBuy = (id: number) => {
-    if(user && user.user){
+    if(user){
       const product = products.find((product) => product.id === id);
       if (product) {
         setCartProducts((prevCartProducts) => {
@@ -110,7 +106,6 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
     const productsFunc = async () => {
 
          const response = await fetch('http://localhost:3000/products')
-
          const data = await response.json()
          setProducts(data)
     }
@@ -124,7 +119,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart, user, signInWithEmailAndPassword, loading}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart}}>
         {children}
       </ModalContext.Provider>
     </div>
@@ -133,11 +128,9 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
 
 export function useCarrinho() {
   const data = useContext(ModalContext);
-
   if (!data) {
     throw new Error("Cannot use useAuth outside a ThemeProvider");
   }
-
   return data;
 }
 

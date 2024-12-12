@@ -111,7 +111,7 @@ const ProductSelected: React.FC = () => {
                                 selectedSize === product.sizes[0].height
                                   ? "bg-yellow-700 text-white"
                                   : "bg-orange-100 text-black"
-                              }`}
+                              }`}                             
                               onClick={() =>
                                 handleSizeClick(product.sizes[0].height)
                               }
