@@ -43,8 +43,22 @@ const Shop = () => {
 
   const getVisibleProducts = () => {
     const filteredProducts = categoria ? filterProducts : products;
+
+    const sortedProducts = [...filteredProducts]; 
+    if (searchValue === greaterValue) {
+      sortedProducts.sort((a, b) =>
+      (b.new ? b.normalPrice : b.salePrice) -
+      (a.new ? a.normalPrice : a.salePrice)
+      ); 
+    } else if (searchValue === lowestValue) {
+      sortedProducts.sort((a, b) =>
+      (a.new ? a.normalPrice : a.salePrice) -
+      (b.new ? b.normalPrice : b.salePrice)
+      ); 
+    }
+
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-    return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+    return sortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
   };
 
   const totalPages = Math.ceil(
