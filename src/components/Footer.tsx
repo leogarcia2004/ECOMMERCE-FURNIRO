@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import logoFacebook from '../assets/footer/facebook_1.png'
 import logoInstagram from '../assets/footer/instagram_1.png'
 import logoTwitter from '../assets/footer/twitter_1.png'
@@ -36,12 +36,22 @@ const Footer = () => {
       <div className='flex gap-28'>
         <div>
           <h4 className="text-gray-400 font-medium mb-12 mr-12">Links</h4>
-          <ul className="flex flex-col gap-8">
-            <li className="font-medium">Home</li>
-            <li className="font-medium">Shop</li>
-            <li className="font-medium">About</li>
-            <li className="font-medium">Contact</li>
-          </ul>
+          <nav>
+            <ul className="flex flex-col gap-8">
+              <li className="cursor-pointer font-medium">
+                <Link to={"/"}>Home</Link>
+              </li>          
+              <li className="cursor-pointer font-medium">
+                <Link to={"/shop"}>Shop</Link>
+              </li>            
+              <li className="cursor-pointer font-medium">
+                <Link to={"/contact"}>About</Link>
+              </li>             
+              <li className="cursor-pointer font-medium">
+                <Link to={"/contact"}>Contact</Link>
+              </li>
+            </ul>
+          </nav>
         </div>
         <div>
           <h4 className="text-gray-400 font-medium mb-12">Help</h4>
