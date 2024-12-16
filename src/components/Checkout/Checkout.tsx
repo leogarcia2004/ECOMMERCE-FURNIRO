@@ -58,7 +58,7 @@ const Checkout: React.FC = () => {
       return;
     }
 
-    navigate("/home");
+    navigate("/thank");
   };
 
   const { quantities, amount, cartProducts } = useCarrinho();

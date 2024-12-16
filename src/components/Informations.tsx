@@ -1,6 +1,3 @@
-
-
-import React from 'react'
 import trophy from '../assets/shop/trophy.png'
 import checked from '../assets/shop/checked.png'
 import truck from '../assets/shop/shipping.png'

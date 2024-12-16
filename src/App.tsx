@@ -11,28 +11,27 @@ import Carrinho from "./components/Cart.tsx";
 import CarrinhoContext from "./contexts/CartContext.tsx";
 import LoginForm from "./components/login/LoginForm.tsx";
 import Register from "./components/register/Register.tsx";
-import PageThank from "./components/PageThank.tsx";
-
+import PageThank from "./components/Thanks/ThanksPage.tsx";
 
 function App() {
   return (
     <>
-        <CarrinhoContext>
-          <Carrinho />
-          <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/productselected/:id" element={<ProductSelected />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/thank" element={<PageThank />} />
-          </Routes>
-          <Footer />
-        </CarrinhoContext>
+      <CarrinhoContext>
+        <Carrinho />
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/productselected/:id" element={<ProductSelected />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/thank" element={<PageThank />} />
+        </Routes>
+        <Footer />
+      </CarrinhoContext>
     </>
   );
 }
