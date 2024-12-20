@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import { IProduct } from '../components/PropsProduct';
 import { useState, useEffect, useContext } from 'react';
 import { useAuthContext } from './auth/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 interface PropsCarrinho {
   children: React.ReactNode;
 }
@@ -16,6 +17,8 @@ interface ModalContextData {
   addQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   removeCart: (id: number) => void;
+  handleCategory: (tag: string) => void;
+  filteredHomeProductsRoom: IProduct[];
 }
 
 const ModalContext = createContext( {} as ModalContextData );
@@ -26,7 +29,9 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [products, setProducts] = useState<IProduct[]>([])
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [selectedTag, setSelectedTag] = useState("");
   const {user} = useAuthContext();
+  const navigate = useNavigate();
 
   const handleBuy = (id: number) => {
     if(user){
@@ -54,6 +59,17 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
     }
     
   };
+
+  const handleCategory = (tag: string) => {
+    setSelectedTag(tag);
+    navigate(`/shop/${tag}`, { state: { tag } });
+  };
+
+  const filteredHomeProductsRoom = products.filter(
+    (product) => selectedTag === "" || product.tags.includes(selectedTag)
+  );
+
+  console.log(filteredHomeProductsRoom)
   
   const amount = cartProducts.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
@@ -119,7 +135,7 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   return (
 
     <div>
-      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart}}>
+      <ModalContext.Provider value={{products, carrinhoOpen, setCarrinhoOpen, handleBuy, cartProducts, amount, quantities, addQuantity, decreaseQuantity, removeCart, handleCategory, filteredHomeProductsRoom}}>
         {children}
       </ModalContext.Provider>
     </div>

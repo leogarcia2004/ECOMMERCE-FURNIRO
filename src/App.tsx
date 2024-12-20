@@ -12,8 +12,11 @@ import CarrinhoContext from "./contexts/CartContext.tsx";
 import LoginForm from "./components/login/LoginForm.tsx";
 import Register from "./components/register/Register.tsx";
 import PageThank from "./components/Thanks/ThanksPage.tsx";
+import { useCarrinho } from "./contexts/CartContext.tsx";
+import '@splidejs/react-splide/css';
 
 function App() {
+  const {filteredHomeProductsRoom} = useCarrinho();
   return (
     <>
       <CarrinhoContext>
@@ -21,7 +24,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<Shop />} />
+          <Route path={filteredHomeProductsRoom ? "/shop/:tag" : "/shop"} element={<Shop />} />
           <Route path="/productselected/:id" element={<ProductSelected />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

@@ -1,9 +1,6 @@
-
 import { useNavigate } from 'react-router-dom'
 
-import React from 'react'
-
-const BotaoShowMore = () => {
+const ButtonShowMore = () => {
 
     const navigate = useNavigate()
 
@@ -17,4 +14,4 @@ const BotaoShowMore = () => {
   )
 }
 
-export default BotaoShowMore
+export default ButtonShowMore

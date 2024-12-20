@@ -6,6 +6,7 @@ import filter from "../../assets/shop/filtering.png";
 import vector from "../../assets/shop/vectorr.png";
 import vector_1 from "../../assets/shop/vectorr_1.png";
 import { useCarrinho } from "../../contexts/CartContext";
+import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const quant = [8, 12, 16];
@@ -15,7 +16,9 @@ const Shop = () => {
   const [categoria, setCategoria] = useState<string>("");
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const PRODUCTS_PER_PAGE = search;
-  const { products } = useCarrinho();
+  const { products, filteredHomeProductsRoom } = useCarrinho();
+  const location = useLocation();
+  console.log(location);
 
   const categories = products.map((product) => product.category);
   const uniqueCategories = Array.from(new Set(categories));
@@ -43,8 +46,7 @@ const Shop = () => {
 
   const getVisibleProducts = () => {
     const filteredProducts = categoria ? filterProducts : products;
-
-    const sortedProducts = [...filteredProducts]; 
+    const sortedProducts = [...filteredProducts || filteredHomeProductsRoom]; 
     if (searchValue === greaterValue) {
       sortedProducts.sort((a, b) =>
       (b.new ? b.normalPrice : b.salePrice) -

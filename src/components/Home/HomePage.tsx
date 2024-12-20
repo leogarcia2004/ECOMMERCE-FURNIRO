@@ -1,8 +1,7 @@
-import { useState } from "react";
 import AmostraFotos from "../../assets/home/Images.png";
 import CarrosselProducts from "./CarouselProducts";
 import Products from "./Products";
-import BotaoShowMore from "../ButtonShowMore";
+import ButtonShowMore from "../ButtonShowMore";
 import { useNavigate } from "react-router-dom";
 import dining from "../../assets/home/image_dining.png";
 import living from "../../assets/home/image_living.png";
@@ -10,28 +9,14 @@ import bedroom from "../../assets/home/image_bedroom.png";
 import { useCarrinho } from "../../contexts/CartContext";
 
 const HomePage = () => {
-  const [selectedTag, setSelectedTag] = useState("");
-  const { products } = useCarrinho();
-  const imagensCarousel = [
-    "https://static.mobly.com.br/p/Mobly-Guarda-Roupa-Casal-com-Espelho-ValC3AAncia-2-PT-6-GV-Branco-4758-1029401-1.jpg",
-    "https://static.mobly.com.br/p/Kappesberg-Conjunto-com-2-Cadeiras-Tiva-Linho-Cinza-e-Nogueira-9086-6509821-2.jpg",
-    "https://static.mobly.com.br/p/Estilare-Rack-Ciro-Branco-125-cm-4975-201767-5.jpg",
-    "https://static.mobly.com.br/p/Modern-Guarda-Roupa-Closet-Studio-Mel-e-Branco-187x80-cm-6973-3680711-1.jpg",
-  ];
-
+  const { products, handleCategory, filteredHomeProductsRoom } = useCarrinho();
   const navigate = useNavigate();
 
   const navigateClick = () => {
     navigate("/shop");
   };
 
-  const handleCategory = (tag: string) => {
-    setSelectedTag(tag);
-  };
-
-  const filteredProducts = products.filter(
-    (product) => selectedTag === "" || product.tags.includes(selectedTag)
-  );
+  console.log(filteredHomeProductsRoom);
 
   return (
     <>
@@ -104,14 +89,14 @@ const HomePage = () => {
         <div className="flex md:flex-wrap pt-6 gap-6 flex-col max-w-screen-xl md:h-[820px]">
           <Products
             products={
-              filteredProducts
-                ? filteredProducts.slice(0, 8)
+              filteredHomeProductsRoom
+                ? filteredHomeProductsRoom.slice(0, 8)
                 : products.slice(0, 8)
             }
           />
         </div>
 
-        <BotaoShowMore />
+        <ButtonShowMore />
       </section>
 
       <section className="bg-orange-100 mt-10 flex gap-8 items-center pl-16 py-8 ">
@@ -130,7 +115,7 @@ const HomePage = () => {
             Explore More
           </button>
         </div>
-        <CarrosselProducts images={imagensCarousel} />
+        <CarrosselProducts />
       </section>
 
       <section className="mt-12 flex flex-col items-center">

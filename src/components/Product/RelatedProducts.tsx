@@ -31,7 +31,7 @@ const RelatedProducts: React.FC<relatedProps> = ({ products, category }) => {
           >
             <div
               key={product.id}
-              className="bg-slate-200 flex w-52 h-90 flex-col card-product"
+              className="bg-slate-200 flex w-52 h-[410px] flex-col card-product"
             >
               <div className="w-full relative">
                 <img
@@ -46,7 +46,7 @@ const RelatedProducts: React.FC<relatedProps> = ({ products, category }) => {
                 />
               </div>
               <div className="flex flex-col px-2 gap-1 ">
-                <span className="mt-1.5 text-lg">{product.title}</span>
+                <span className="mt-1.5 text-base">{product.title}</span>
                 <span className="text-sm text-zinc-500 overflow-y-auto max-h-16">
                   {product.description.short}
                 </span>
@@ -57,7 +57,7 @@ const RelatedProducts: React.FC<relatedProps> = ({ products, category }) => {
               </div>
             </div>
 
-            <div className=" bg-black hover:z-10 bg-opacity-70  flex-col gap-3 justify-center items-center w-52 h-90 card-add">
+            <div className=" bg-black hover:z-10 bg-opacity-70  flex-col gap-3 justify-center items-center w-52 h-[410px] card-add">
               <button
                 onClick={(e) => doubleFunc(e, product.id)}
                 className=' bg-white px-6 py-2 w-fit text-yellow-600 rounded-sm font-semibold md:mt-2 mt-6"'
