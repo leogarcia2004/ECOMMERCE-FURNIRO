@@ -6,7 +6,6 @@ import { useCarrinho } from "../../contexts/CartContext";
 
 const Products: React.FC<productsProps> = ({ products }) => {
   const { handleBuy } = useCarrinho();
-
   const navigate = useNavigate();
 
   const handleBuyRelated = (product: IProduct) => {

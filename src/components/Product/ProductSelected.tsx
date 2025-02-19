@@ -174,16 +174,17 @@ const ProductSelected: React.FC = () => {
                   <div className="flex flex-col gap-3">
                     <span className="text-zinc-400 font-semibold">Color:</span>
                     <ul className="flex gap-4">
-                      {product.colors.map((color: string) => (
+                      {product.colors.map((color: { name: string; hex: string }) => (
                         <li key={color.name}>
                           <button
                             className={`p-4 rounded-full ${
-                              seletedColor === color
+                              seletedColor === color.name
                                 ? "border border-black"
                                 : "border-none"
                             }`}
                             style={{ backgroundColor: color.hex }}
-                            onClick={() => handleColorClick(color)}
+                            onClick={() => handleColorClick(color.name)}
+                            title="Color"
                           ></button>
                         </li>
                       ))}

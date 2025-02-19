@@ -1,24 +1,20 @@
-import { useCarrinho } from "../../contexts/CartContext";
+
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
 const CarrosselProducts = () => {
-  const { handleCategory } = useCarrinho();
 
   const imagensCarousel = [
     {
       title: "Bedroom",
-      tag: "Quarto",
       imageURL: "https://static.mobly.com.br/p/Mobly-Guarda-Roupa-Casal-com-Espelho-ValC3AAncia-2-PT-6-GV-Branco-4758-1029401-1.jpg"
     },
     {
       title: "Living",
-      tag: "Sala",
       imageURL: "https://static.mobly.com.br/p/Estilare-Rack-Ciro-Branco-125-cm-4975-201767-5.jpg"
     },
     {
       title: "Dining",
-      tag: "Mesa",
       imageURL: "https://static.mobly.com.br/p/Kappesberg-Conjunto-com-2-Cadeiras-Tiva-Linho-Cinza-e-Nogueira-9086-6509821-2.jpg"
     },
   ];
@@ -45,7 +41,7 @@ const CarrosselProducts = () => {
                 </div>
                 <button
                   className="px-4 py-2 bg-amber-600"
-                  onClick={() => handleCategory(image.tag)}
+                  title="Shop"
                 >
                   <i className="fas fa-arrow-right text-white"></i>
                 </button>

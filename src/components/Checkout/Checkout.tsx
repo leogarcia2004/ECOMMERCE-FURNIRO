@@ -24,6 +24,8 @@ const Checkout: React.FC = () => {
   const [clicked, setClicked] = useState<string>("");
 
   const navigate = useNavigate();
+  const { quantities, amount, cartProducts } = useCarrinho();
+  const { user } = useAuthContext();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -61,8 +63,6 @@ const Checkout: React.FC = () => {
     navigate("/thank");
   };
 
-  const { quantities, amount, cartProducts } = useCarrinho();
-  const { user } = useAuthContext();
 
   if (!user) {
     navigate("/");

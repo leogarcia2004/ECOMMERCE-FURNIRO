@@ -1,7 +1,3 @@
-
-
-import React from 'react'
-
 const ButtonAddCart = () => {
   return (
     <div>

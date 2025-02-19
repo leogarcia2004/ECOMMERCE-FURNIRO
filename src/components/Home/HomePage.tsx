@@ -16,8 +16,6 @@ const HomePage = () => {
     navigate("/shop");
   };
 
-  console.log(filteredHomeProductsRoom);
-
   return (
     <>
       <section className="bg-slate-200 bg-imagem_homepage bg-cover bg-center h-180 flex justify-end items-center pr-20">

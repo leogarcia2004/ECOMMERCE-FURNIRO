@@ -9,7 +9,6 @@ const RelatedProducts: React.FC<relatedProps> = ({ products, category }) => {
   const relatedProducts = products
     .filter((product) => product.category === category)
     .slice(0, 4);
-
   const navigate = useNavigate();
 
   const handleProductClick = (product: IProduct) => {

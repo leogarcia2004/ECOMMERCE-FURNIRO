@@ -2,7 +2,6 @@ import { createContext } from 'react';
 import { IProduct } from '../components/PropsProduct';
 import { useState, useEffect, useContext } from 'react';
 import { useAuthContext } from './auth/AuthProvider';
-import { useNavigate } from 'react-router-dom';
 interface PropsCarrinho {
   children: React.ReactNode;
 }
@@ -31,7 +30,6 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [selectedTag, setSelectedTag] = useState("");
   const {user} = useAuthContext();
-  const navigate = useNavigate();
 
   const handleBuy = (id: number) => {
     if(user){
@@ -56,21 +54,17 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
       }
     } else {
       alert('Você precisa estar logado para efetuar a compra!')
-    }
-    
-  };
-
-  const handleCategory = (tag: string) => {
-    setSelectedTag(tag);
-    navigate(`/shop/${tag}`, { state: { tag } });
+    } 
   };
 
   const filteredHomeProductsRoom = products.filter(
     (product) => selectedTag === "" || product.tags.includes(selectedTag)
   );
 
-  console.log(filteredHomeProductsRoom)
-  
+  const handleCategory = (tag: string) => {
+    setSelectedTag(tag);
+  };
+
   const amount = cartProducts.reduce((acc, product) => {
     const quantity = quantities[product.id] || 1;
     const price = product.new ? product.normalPrice : product.salePrice ;
@@ -86,7 +80,6 @@ const CarrinhoContext:React.FC<PropsCarrinho> = ({children}) => {
     } else {
       alert('Você precisa estar logado para efetuar a compra!')
     }
-
   };
 
   const decreaseQuantity = (id: number) => {

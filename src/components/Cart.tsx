@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bag from "../assets/bag_shopping.png";
 import { useCarrinho } from "../contexts/CartContext";
@@ -13,7 +12,7 @@ const Carrinho: React.FC = () => {
     quantities,
     removeCart,
   } = useCarrinho();
-  const [clicked, setClicked] = useState(true);
+  const clicked = true;
 
   const navigate = useNavigate();
 

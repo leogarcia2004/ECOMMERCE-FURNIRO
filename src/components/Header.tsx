@@ -14,7 +14,6 @@ const Header = () => {
     navigate("/");
   };
 
-
   return (
     <header className="bg-white flex flex-col gap-4 items-center justify-center md:justify-between font-semibold md:items-center md:flex-row py-6 w-full md:h-20 h-fit top-0 sticky z-10 shadow-md shadow-neutral-300">
       <img

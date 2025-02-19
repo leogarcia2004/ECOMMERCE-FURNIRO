@@ -1,6 +1,4 @@
 
-
-import React from 'react'
 import ButtonAddCart from './ButtonAddCart'
 
 const CartProductHover = () => {

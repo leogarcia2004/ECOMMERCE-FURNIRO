@@ -16,9 +16,10 @@ const Shop = () => {
   const [categoria, setCategoria] = useState<string>("");
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const PRODUCTS_PER_PAGE = search;
-  const { products, filteredHomeProductsRoom } = useCarrinho();
+  const { products } = useCarrinho();
   const location = useLocation();
-  console.log(location);
+  const { array } = location.state || {};
+  console.log(array);
 
   const categories = products.map((product) => product.category);
   const uniqueCategories = Array.from(new Set(categories));
@@ -46,21 +47,21 @@ const Shop = () => {
 
   const getVisibleProducts = () => {
     const filteredProducts = categoria ? filterProducts : products;
-    const sortedProducts = [...filteredProducts || filteredHomeProductsRoom]; 
+
     if (searchValue === greaterValue) {
-      sortedProducts.sort((a, b) =>
+      filteredProducts.sort((a, b) =>
       (b.new ? b.normalPrice : b.salePrice) -
       (a.new ? a.normalPrice : a.salePrice)
       ); 
     } else if (searchValue === lowestValue) {
-      sortedProducts.sort((a, b) =>
+      filteredProducts.sort((a, b) =>
       (a.new ? a.normalPrice : a.salePrice) -
       (b.new ? b.normalPrice : b.salePrice)
       ); 
     }
 
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-    return sortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+    return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
   };
 
   const totalPages = Math.ceil(
@@ -119,8 +120,9 @@ const Shop = () => {
                 <select
                   onChange={(e) => setCategoria(e.target.value)}
                   className="w-40"
-                  name="cateogrias"
-                  id="categoria"
+                  name="categories"
+                  id="categories"
+                  title="Categories"
                 >
                   <option value="all">All</option>
                   {uniqueCategories.map((categoria) => (
@@ -151,8 +153,9 @@ const Shop = () => {
             Show
             <select
               onChange={(e) => setSearch(Number(e.target.value))}
-              name="quantidade"
-              id="quantidade"
+              name="amount"
+              id="amount"
+              title="Amount"
             >
               {quant.map((search) => (
                 <option key={search} value={search}>
@@ -166,8 +169,9 @@ const Shop = () => {
             <select
               className="text-sm"
               onChange={(e) => setSearchValue(Number(e.target.value))}
-              name=""
-              id=""
+              name="SeachValue"
+              id="SeachValue"
+              title="SeachValue"
             >
               <option value="default">Default</option>
               <option value={greaterValue}>Greater value - Lowest value</option>
@@ -177,8 +181,8 @@ const Shop = () => {
         </div>
       </section>
       <section className="flex justify-center">
-        <div className="flex items-center md:flex-wrap gap-6 flex-col md:max-h-[1600px]">
-          <Products products={getVisibleProducts()} />
+        <div className="flex items-center md:flex-wrap gap-6 flex-col md:h-1000 md:max-h-[1000px]">
+          <Products products={array ? array : getVisibleProducts()} />
         </div>
       </section>
       <div className="flex gap-6 justify-center mt-8 mb-12">
